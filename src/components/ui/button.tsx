@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
@@ -9,24 +8,28 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "gradient-grad text-white shadow hover:gradient-grad-hover",
-        secondary: "bg-secondary text-white shadow-sm hover:bg-secondary-foreground",
+        default: "gradient-grad text-white shadow-sm hover:gradient-grad-dark",
+        secondary1: "bg-secondary-700 text-white shadow-sm hover:bg-secondary-900",
+        secondary2: "bg-secondary-400 text-white shadow-sm hover:bg-secondary-600",
+        secondary3: "bg-secondary-200 text-secondary-700 shadow-sm hover:bg-secondary-400",
         outline:
-          "border border-input bg-background text-input shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-secondary-300 bg-transparent text-secondary-600 shadow-sm hover:border-secondary-400 hover:text-secondary-800",
+        disabled: "bg-black-200 text-white shadow-sm",
+        disabledOutline: "border border-black-200 bg-transparent text-black-400 shadow-sm",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-14 px-5 py-4 rounded-[8px]",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
-        icon: "h-9 w-9",
+        lg: "h-14 px-5 py-4 rounded-[8px] text-base",
+        md: "h-12 px-5 py-3.5 rounded-[6px] text-[15px]",
+        sm: "h-10 px-3.5 py-3 rounded-[6px] text-sm",
+        xs: "h-8 px-3 py-2 rounded-[6px] text-[13px]",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
+      size: "lg",
     },
   }
 );

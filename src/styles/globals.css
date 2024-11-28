@@ -2,8 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  font-family: "Pretendard", sans-serif;
+  font-size: 16px;
 }
 
 @layer base {
@@ -14,10 +17,31 @@ body {
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
+    --primary-1: 167, 66%, 94%;
+    --primary-2: 176, 94%, 40%;
+    --primary-3: 173, 100%, 35%;
+    --primary-4: 119, 91%, 40%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 216 35.8% 31.2%;
+    --secondary-900: 224, 39%, 17%;
+    --secondary-800: 221, 48%, 24%;
+    --secondary-700: 216, 36%, 31%;
+    --secondary-600: 214, 23%, 49%;
+    --secondary-500: 215, 19%, 53%;
+    --secondary-400: 214, 23%, 73%;
+    --secondary-300: 214, 22%, 75%;
+    --secondary-200: 214, 23%, 86%;
+    --secondary-100: 215, 33%, 93%;
     --secondary-foreground: 224 38.8% 16.7%;
+    --black-900: 206, 13%, 10%;
+    --black-800: 206, 6%, 22%;
+    --black-700: 206, 4%, 34%;
+    --black-600: 206, 3%, 46%;
+    --black-500: 206, 3%, 57%;
+    --black-400: 206, 4%, 69%;
+    --black-300: 206, 7%, 81%;
+    --black-200: 206, 10%, 87%;
+    --black-100: 206, 19%, 93%;
+    --black-00: 210, 12%, 97%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
     --accent: 240 4.8% 95.9%;
@@ -26,7 +50,6 @@ body {
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
     --input: 214 21.5% 74.5%;
-    /* --input: 214 23.2% 49%; */
     --ring: 240 10% 3.9%;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
@@ -34,6 +57,14 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --states-red: 7, 92%, 61%;
+    --states-orange: 31, 81%, 51%;
+    --states-yellow: 38, 100%, 68%;
+    --states-blue: 218, 98%, 51%;
+    --states-green: 154, 89%, 40%;
+    --bg-lnb: 213, 14%, 13%;
+    --bg-alert: 213, 14%, 13%, 0.5;
+    --bg-page: 200, 13%, 95%, 1;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -60,6 +91,7 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --bg-page: 210, 15%, 92%, 1;
   }
 }
 
