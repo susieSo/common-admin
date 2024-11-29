@@ -46,7 +46,11 @@ interface CustomIconProps extends React.SVGAttributes<SVGElement> {
   className?: string;
 }
 
-export const CustomIcon = ({ iconType, size = "m", ...props }: CustomIconProps) => {
+export const CustomIcon = ({
+  iconType,
+  size = "m",
+  ...props
+}: CustomIconProps) => {
   const Icon = IconTypes[iconType];
   const iconSize = IconSize[size];
 
