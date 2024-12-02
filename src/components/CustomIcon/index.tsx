@@ -3,6 +3,7 @@ import * as Icons from "../../../public/icons";
 
 const IconSize = {
   s: 16,
+  sm: 20,
   m: 24,
   l: 32,
 } as const;
@@ -42,15 +43,11 @@ interface CustomIconProps extends React.SVGAttributes<SVGElement> {
   iconType: IconType;
   fill?: string;
   stroke?: string;
-  size?: keyof typeof IconSize;
+  size: keyof typeof IconSize;
   className?: string;
 }
 
-export const CustomIcon = ({
-  iconType,
-  size = "m",
-  ...props
-}: CustomIconProps) => {
+export const CustomIcon = ({ iconType, size, ...props }: CustomIconProps) => {
   const Icon = IconTypes[iconType];
   const iconSize = IconSize[size];
 

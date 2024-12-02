@@ -7,6 +7,7 @@ body {
   height: 100%;
   font-family: "Pretendard", sans-serif;
   font-size: 16px;
+  background-color: var(--bg-page);
 }
 
 @layer base {

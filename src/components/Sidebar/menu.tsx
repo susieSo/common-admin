@@ -1,19 +1,13 @@
 import Link from "next/link";
 
-import { CollapseMenuButton } from "./collapse-menu";
+import { cn } from "@/lib/utils";
 import { getMenuList } from "@/lib/menu-list";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { Collapsible, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Button } from "@/components/ui/button";
+import { SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
+import { Collapsible } from "@/components/ui/collapsible";
+import { CollapseMenuButton } from "./collapse-menu";
 
-interface MenuProps {
-  isOpen: boolean | undefined;
-}
-
-export function Menu({ isOpen }: MenuProps) {
+export function Menu() {
   const menuList = getMenuList();
 
   return (
@@ -21,23 +15,24 @@ export function Menu({ isOpen }: MenuProps) {
       <Collapsible className="group/collapsible">
         {menuList.map(({ href, label, icon: Icon, submenus }, index) =>
           !submenus || submenus.length === 0 ? (
-            <CollapsibleTrigger asChild key={index}>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href={href}>
-                    <Icon size={24} />
-                    <span>{label}</span>
+            <SidebarMenuItem key={index}>
+              <Button className="w-full h-auto py-5 px-6 justify-start hover:text-primary-2 hover:bg-transparent">
+                <div className="w-full items-center flex justify-between">
+                  <Link href={href} className="flex items-center gap-2">
+                    <span>
+                      <Icon size={16} />
+                    </span>
+                    <p className={cn("max-w-[150px] truncate")}>{label}</p>
                   </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </CollapsibleTrigger>
+                </div>
+              </Button>
+            </SidebarMenuItem>
           ) : (
             <SidebarMenuItem key={index}>
               <CollapseMenuButton
                 icon={Icon}
                 label={label}
                 submenus={submenus}
-                isOpen={isOpen}
               />
             </SidebarMenuItem>
           )

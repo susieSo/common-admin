@@ -10,23 +10,25 @@ import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
+  SidebarProvider,
 } from "@/components/ui/sidebar";
 
 export function CustomSidebar() {
   const sidebar = useStore(useSidebar, (x) => x);
   if (!sidebar) return null;
-  const { isOpen } = sidebar;
 
   return (
-    <Sidebar variant="floating">
-      <SidebarHeader>
-        <Link href="/">
-          <Image src={logo} alt="logo" width={120} height={19} />
-        </Link>
-      </SidebarHeader>
-      <SidebarContent>
-        <Menu isOpen={isOpen} />
-      </SidebarContent>
-    </Sidebar>
+    <SidebarProvider>
+      <Sidebar variant="floating">
+        <SidebarHeader>
+          <Link href="/">
+            <Image src={logo} alt="logo" width={120} height={19} />
+          </Link>
+        </SidebarHeader>
+        <SidebarContent>
+          <Menu />
+        </SidebarContent>
+      </Sidebar>
+    </SidebarProvider>
   );
 }

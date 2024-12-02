@@ -26,15 +26,15 @@ export function getMenuList(): Menu[] {
       icon: LayoutGrid,
       submenus: [
         {
-          href: "/",
+          href: "/app/splash",
           label: "스플래시 화면 관리",
         },
         {
-          href: "/",
+          href: "/app/login",
           label: "로그인 화면 관리",
         },
         {
-          href: "/",
+          href: "/app/appRunning",
           label: "앱 구동 관리",
         },
       ],

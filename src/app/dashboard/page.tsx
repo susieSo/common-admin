@@ -1,14 +1,10 @@
 "use client";
-
-import { CustomSidebar } from "@/components/Sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { ContentLayout } from "@/components/ContentLayout";
 
 export default function Dashboard() {
   return (
-    <div className="p-4 h-screen bg-bg-page">
-      <SidebarProvider>
-        <CustomSidebar />
-      </SidebarProvider>
-    </div>
+    <ContentLayout>
+      <div>대시보드</div>
+    </ContentLayout>
   );
 }
