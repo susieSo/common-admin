@@ -40,7 +40,7 @@ export function CollapseMenuButton({
               <span>
                 <Icon size={16} />
               </span>
-              <p className={cn("max-w-[150px] truncate")}>{label}</p>
+              <p className={cn("truncate")}>{label}</p>
             </div>
             <div className={cn("whitespace-nowrap")}>
               <ChevronDown
@@ -55,11 +55,11 @@ export function CollapseMenuButton({
         {submenus.map(({ href, label }, index) => (
           <Button
             key={index}
-            className="w-full justify-start h-10 mb-[11px] text-sm pl-14 py-0 hover:text-primary-2 hover:bg-transparent"
+            className="w-full justify-start h-10 text-sm pl-14 py-0 hover:text-primary-2 hover:bg-transparent"
             asChild
           >
             <Link href={href}>
-              <p className={cn("max-w-[170px]")}>{label}</p>
+              <p className={cn("truncate")}>{label}</p>
             </Link>
           </Button>
         ))}

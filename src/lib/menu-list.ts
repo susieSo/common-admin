@@ -1,8 +1,11 @@
+import React, { ReactNode } from "react";
 import { LayoutGrid, LucideIcon } from "lucide-react";
+import { CustomIcon, CustomIconType } from "@/components/CustomIcon";
 
 type Menu = {
   href: string;
   label: string;
+  // icon: CustomIconType;
   icon: LucideIcon;
   submenus?: Submenu[];
 };

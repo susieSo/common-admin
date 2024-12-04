@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ForwardRefExoticComponent, RefAttributes } from "react";
 import * as Icons from "../../../public/icons";
 
 const IconSize = {
@@ -38,6 +38,10 @@ const IconTypes = {
 } as const;
 
 type IconType = keyof typeof IconTypes;
+
+export type CustomIconType = ForwardRefExoticComponent<
+  Omit<CustomIconProps, "ref"> & RefAttributes<SVGSVGElement>
+>;
 
 interface CustomIconProps extends React.SVGAttributes<SVGElement> {
   iconType: IconType;
