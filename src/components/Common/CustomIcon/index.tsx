@@ -1,5 +1,5 @@
 import React, { ForwardRefExoticComponent, RefAttributes } from "react";
-import * as Icons from "../../../public/icons";
+import * as Icons from "../../../../public/icons";
 
 const IconSize = {
   s: 16,
@@ -35,6 +35,8 @@ const IconTypes = {
   closeCircle: Icons.icCloseCircle,
   close: Icons.icClose,
   check: Icons.icCheck,
+  chevronUp: Icons.icChevronUp,
+  ChevronDown: Icons.icChevronDown,
 } as const;
 
 type IconType = keyof typeof IconTypes;

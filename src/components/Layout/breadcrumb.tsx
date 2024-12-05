@@ -6,14 +6,14 @@ import {
   BreadcrumbSeparator,
 } from "../ui/breadcrumb";
 import Link from "next/link";
-import { CustomIcon } from "../CustomIcon";
+import { CustomIcon } from "../Common/CustomIcon";
 
 interface CustomBreadCrumbProps {
-  parent?: string;
   current: string;
+  parent?: string;
 }
 
-export function CustomBreadCrumb({ parent, current }: CustomBreadCrumbProps) {
+export function CustomBreadCrumb({ current, parent }: CustomBreadCrumbProps) {
   return !parent ? (
     <Breadcrumb>
       <BreadcrumbList>

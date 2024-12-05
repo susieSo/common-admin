@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { CustomIcon } from "../CustomIcon";
+import { CustomIcon } from "../Common/CustomIcon";
 
-export function UserNav() {
+export function UserNavigation() {
   return (
     <>
       <ul className="flex justify-between gap-5 text-sm text-secondary-800">

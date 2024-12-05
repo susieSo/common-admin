@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CustomIcon } from "../CustomIcon";
+import { CustomIcon } from "../Common/CustomIcon";
 
 const data = [
   {

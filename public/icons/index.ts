@@ -24,3 +24,5 @@ export { default as icTime } from "./ic-time.svg";
 export { default as icCloseCircle } from "./ic-close-circle.svg";
 export { default as icClose } from "./ic-close.svg";
 export { default as icCheck } from "./ic-check.svg";
+export { default as icChevronUp } from "./ic-chevron-up.svg";
+export { default as icChevronDown } from "./ic-chevron-down.svg";

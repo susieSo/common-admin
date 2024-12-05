@@ -1,31 +1,40 @@
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { getMenuList } from "@/lib/menu-list";
-import { Button } from "@/components/ui/button";
-import { SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
 import { Collapsible } from "@/components/ui/collapsible";
 import { CollapseMenuButton } from "./collapse-menu";
 
 export function Menu() {
   const menuList = getMenuList();
+  const pathname = usePathname();
 
   return (
     <SidebarMenu className="text-white">
       <Collapsible className="group/collapsible">
-        {menuList.map(({ href, label, icon: Icon, submenus }, index) =>
+        {menuList.map(({ href, label, icon: Icon, active, submenus }, index) =>
           !submenus || submenus.length === 0 ? (
             <SidebarMenuItem key={index}>
-              <Button className="w-full h-auto py-5 px-6 justify-start hover:text-primary-2 hover:bg-transparent">
+              <SidebarMenuButton
+                variant={
+                  (active === undefined && pathname.startsWith(href)) || active
+                    ? "active"
+                    : "default"
+                }
+              >
                 <div className="w-full items-center flex justify-between">
                   <Link href={href} className="flex items-center gap-2">
-                    <span>
-                      <Icon size={16} />
-                    </span>
+                    <span>{Icon}</span>
                     <p className={cn("max-w-[150px] truncate")}>{label}</p>
                   </Link>
                 </div>
-              </Button>
+              </SidebarMenuButton>
             </SidebarMenuItem>
           ) : (
             <SidebarMenuItem key={index}>
@@ -33,6 +42,9 @@ export function Menu() {
                 icon={Icon}
                 label={label}
                 submenus={submenus}
+                active={
+                  active === undefined ? pathname.startsWith(href) : active
+                }
               />
             </SidebarMenuItem>
           )
