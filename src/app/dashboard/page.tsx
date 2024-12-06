@@ -12,7 +12,7 @@ export default function Dashboard() {
     })();
 
   return (
-    <div className="h-screen bg-bg-page">
+    <div>
       <div className="container">
         <HeaderLayout current={currentLabel} />
         <div className="px-14 m-auto">

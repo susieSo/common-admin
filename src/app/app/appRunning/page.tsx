@@ -21,7 +21,7 @@ export default function LoginScreen() {
   const parentLabel = currentMenu?.label;
 
   return (
-    <div className="h-screen bg-bg-page">
+    <div>
       <div className="container">
         <HeaderLayout current={currentLabel} parent={parentLabel} />
         <div className="px-14 m-auto">
