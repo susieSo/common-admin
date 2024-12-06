@@ -11,12 +11,6 @@ body {
   background-color: var(--bg-page);
 }
 
-@media (min-width: 640px) {
-  .container {
-    max-width: 100%;
-  }
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;

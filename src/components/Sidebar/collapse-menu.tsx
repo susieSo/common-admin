@@ -41,9 +41,9 @@ export function CollapseMenuButton({
   const [isCollapsed, setIsCollapsed] = useState<boolean>(isSubmenuActive);
   return (
     <Collapsible
+      className="w-full"
       open={isCollapsed}
       onOpenChange={setIsCollapsed}
-      className="w-full"
     >
       <CollapsibleTrigger
         className="[&[data-state=open]>div>div>svg]:rotate-180"
@@ -65,7 +65,11 @@ export function CollapseMenuButton({
           </div>
         </SidebarMenuButton>
       </CollapsibleTrigger>
-      <CollapsibleContent className="mb-3.5 overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+      <CollapsibleContent
+        className={cn(
+          "mb-3.5 overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down"
+        )}
+      >
         {submenus.map(({ href, label, active }, index) => (
           <SidebarMenuSubButton
             key={index}

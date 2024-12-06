@@ -5,7 +5,7 @@ import { useStore } from "zustand";
 
 import { useSidebar } from "@/hooks/use-sidebar";
 import { CustomSidebar } from "../Sidebar";
-import { cn } from "@/lib/utils";
+import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
 
 export default function AdminLayout({
   children,
@@ -16,15 +16,12 @@ export default function AdminLayout({
   if (!sidebar) return null;
 
   return (
-    <>
+    <SidebarProvider>
       <CustomSidebar />
-      <main
-        className={cn(
-          "transition-[margin-left] ease-in-out duration-300 lg:ml-72"
-        )}
-      >
+      <main className="w-full">
+        <SidebarTrigger />
         {children}
       </main>
-    </>
+    </SidebarProvider>
   );
 }

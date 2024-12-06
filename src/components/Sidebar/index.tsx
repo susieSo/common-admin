@@ -10,7 +10,6 @@ import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
-  SidebarProvider,
 } from "@/components/ui/sidebar";
 import { Menu } from "./menu";
 
@@ -20,7 +19,7 @@ export function CustomSidebar() {
   const { getOpenState } = sidebar;
 
   return (
-    <SidebarProvider>
+    <>
       <Sidebar
         variant="floating"
         className={cn(getOpenState() ? "w-[--sidebar-width]" : "w-0")}
@@ -34,6 +33,6 @@ export function CustomSidebar() {
           <Menu />
         </SidebarContent>
       </Sidebar>
-    </SidebarProvider>
+    </>
   );
 }
