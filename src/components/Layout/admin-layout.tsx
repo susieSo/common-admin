@@ -18,7 +18,7 @@ export default function AdminLayout({
   return (
     <SidebarProvider>
       <CustomSidebar />
-      <main className="w-full h-screen bg-bg-page">
+      <main className="relative w-full h-screen bg-bg-page">
         <SidebarTrigger />
         {children}
       </main>
