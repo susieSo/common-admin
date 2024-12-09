@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import {
@@ -13,7 +14,6 @@ import {
   SidebarMenuSubButton,
 } from "@/components/ui/sidebar";
 import { CustomIcon } from "../Common/CustomIcon";
-import { usePathname } from "next/navigation";
 
 type Submenu = {
   href: string;
@@ -26,7 +26,6 @@ interface CollapseMenuButtonProps {
   label: string;
   active?: boolean;
   submenus: Submenu[];
-  isOpen?: boolean | undefined;
 }
 
 export function CollapseMenuButton({

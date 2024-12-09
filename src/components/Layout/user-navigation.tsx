@@ -8,7 +8,7 @@ export function UserNavigation() {
         <li>
           <Link href="/mypage" className="flex items-center gap-1">
             <span>
-              <CustomIcon iconType="personStroke" size="s" />
+              <CustomIcon iconType="personStroke" size="s" fill="#60799A" />
             </span>
             <p>내정보</p>
           </Link>
@@ -16,7 +16,7 @@ export function UserNavigation() {
         <li>
           <Link href="/mypage" className="flex items-center gap-1">
             <span>
-              <CustomIcon iconType="setting" size="s" />
+              <CustomIcon iconType="setting" size="s" fill="#60799A" />
             </span>
             <p>계정관리</p>
           </Link>
@@ -24,7 +24,7 @@ export function UserNavigation() {
         <li>
           <Link href="/mypage" className="flex items-center gap-1">
             <span>
-              <CustomIcon iconType="logout" size="s" />
+              <CustomIcon iconType="logout" size="s" fill="#60799A" />
             </span>
             <p>내정보</p>
           </Link>

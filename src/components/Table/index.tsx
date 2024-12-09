@@ -25,7 +25,17 @@ import {
 } from "@/components/ui/select";
 import { CustomIcon } from "../Common/CustomIcon";
 
-const data = [
+type DataType = {
+  name: string;
+  email: string;
+  department: string;
+  authority: string;
+  registDate: string;
+  lastConnectTime: string;
+  edit: string;
+};
+
+const data: DataType[] = [
   {
     name: "test",
     email: "test@gmail.com",
@@ -55,7 +65,7 @@ const data = [
   },
 ];
 
-const columnHelper = createColumnHelper();
+const columnHelper = createColumnHelper<DataType>();
 const columns = [
   columnHelper.accessor("name", { header: "이름" }),
   columnHelper.accessor("email", { header: "ID(이메일)" }),
