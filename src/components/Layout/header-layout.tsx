@@ -1,13 +1,12 @@
+"use client";
 import React from "react";
 import { CustomBreadCrumb } from "@/components/Layout/breadcrumb";
 import { UserNavigation } from "@/components/Layout/user-navigation";
 import { useMenuLabel } from "@/hooks/use-menuLabel";
+import { usePathname } from "next/navigation";
 
-type HeadrLayoutProps = {
-  pathname: string;
-};
-
-export function HeaderLayout({ pathname }: HeadrLayoutProps) {
+export function HeaderLayout() {
+  const pathname = usePathname();
   const menuLabel = useMenuLabel(pathname);
 
   return (
