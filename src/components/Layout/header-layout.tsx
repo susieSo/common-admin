@@ -1,16 +1,21 @@
 import React from "react";
 import { CustomBreadCrumb } from "@/components/Layout/breadcrumb";
 import { UserNavigation } from "@/components/Layout/user-navigation";
+import { useMenuLabel } from "@/hooks/use-menuLabel";
 
-interface HeaderLayoutProps {
-  current: string;
-  parent?: string;
-}
+type HeadrLayoutProps = {
+  pathname: string;
+};
 
-export function HeaderLayout({ current, parent }: HeaderLayoutProps) {
+export function HeaderLayout({ pathname }: HeadrLayoutProps) {
+  const menuLabel = useMenuLabel(pathname);
+
   return (
     <div className="flex justify-between py-7 px-10">
-      <CustomBreadCrumb current={current} parent={parent} />
+      <CustomBreadCrumb
+        current={menuLabel.currentLabel}
+        parent={menuLabel.parentLabel}
+      />
       <UserNavigation />
     </div>
   );

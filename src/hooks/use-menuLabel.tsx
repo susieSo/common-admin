@@ -8,12 +8,16 @@ export function useMenuLabel(pathname: string) {
       ? menu.submenus.some((submenu) => submenu.href === pathname)
       : menu.href === pathname
   );
-  const currentLabel = currentMenu?.submenus?.length
+  const currentLabel: string = currentMenu?.submenus?.length
     ? currentMenu.submenus.find((submenu) => submenu.href === pathname)
         ?.label ?? ""
     : currentMenu?.label ?? "";
 
   const parentLabel = currentMenu?.label ?? "";
+
+  if (currentLabel === parentLabel) {
+    return { currentLabel };
+  }
 
   return { currentLabel, parentLabel };
 }
