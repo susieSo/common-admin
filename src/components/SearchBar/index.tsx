@@ -88,10 +88,10 @@ export function SearchBar() {
               )}
             />
             <div className="flex gap-1 items-center">
-              <Button type="submit" variant="secondary1" size="sm">
+              <Button type="submit" variant="secondary1" size="md">
                 검색 <CustomIcon iconType="search" size="s" fill="white" />
               </Button>
-              <Button variant="secondary2" size="sm">
+              <Button variant="secondary2" size="md">
                 <CustomIcon iconType="refresh" size="s" fill="white" />
               </Button>
             </div>

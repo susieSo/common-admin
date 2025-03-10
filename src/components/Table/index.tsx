@@ -92,7 +92,7 @@ export function DataTable() {
           </p>
         </div>
         <div className="flex items-center">
-          <Button variant="secondary1" size="sm" className="mr-4">
+          <Button variant="secondary1" size="md" className="mr-4">
             계정권한관리 <CustomIcon iconType="setting" size="s" fill="white" />
           </Button>
           <Select>

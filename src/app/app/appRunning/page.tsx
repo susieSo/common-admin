@@ -7,7 +7,7 @@ export default function LoginScreen() {
     <>
       <div className="py-8 flex justify-between items-center">
         <Title />
-        <Button size="md" variant="gradient">
+        <Button size="lg" variant="gradient">
           신규등록 <CustomIcon iconType="plus" size="sm" fill="white" />
         </Button>
       </div>

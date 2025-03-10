@@ -5,17 +5,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm leading-normal font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-primary-2 text-primary-2 shadow hover:bg-primary/90",
+        default: "bg-secondary-700 text-white shadow hover:bg-secondary-900",
         gradient: "gradient-grad text-white shadow-sm hover:gradient-grad-dark",
-        secondary1:
-          "bg-secondary-700 text-white shadow-sm hover:bg-secondary-900",
-        secondary2:
+        secondary:
           "bg-secondary-400 text-white shadow-sm hover:bg-secondary-600",
-        secondary3:
+        tertiary:
           "bg-secondary-200 text-secondary-700 shadow-sm hover:bg-secondary-400",
         outline:
           "border border-secondary-300 bg-transparent text-secondary-600 shadow-sm hover:border-secondary-400 hover:text-secondary-800",
@@ -24,14 +22,15 @@ const buttonVariants = cva(
           "border border-black-200 bg-transparent text-black-400 shadow-sm",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost:
+          "hover:bg-accent text-secondary-800 hover:underline hover:bg-accent",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        lg: "h-14 px-5 py-4 rounded-[8px] text-base",
-        md: "h-12 px-5 py-3.5 rounded-[6px] text-[15px]",
-        sm: "h-10 px-3.5 py-3 rounded-[6px] text-sm",
-        xs: "h-8 px-3 py-2 rounded-[6px] text-[13px]",
+        xl: "h-14 px-5 py-[15px] rounded-[8px] text-base/[normal]",
+        lg: "h-12 px-5 py-3 rounded-[6px] text-[15px]",
+        md: "h-10 px-3.5 py-2 rounded-[6px] text-sm",
+        sm: "h-8 px-3 py-1.5 rounded-[6px] text-[13px]",
       },
     },
     defaultVariants: {

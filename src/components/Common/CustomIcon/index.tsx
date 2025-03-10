@@ -8,7 +8,7 @@ const IconSize = {
   l: 32,
 } as const;
 
-const IconTypes = {
+export const IconTypes = {
   dashboard: Icons.icDashboard,
   app: Icons.icApp,
   content: Icons.icContent,
@@ -62,5 +62,5 @@ export const CustomIcon = ({ iconType, size, ...props }: CustomIconProps) => {
     return null;
   }
 
-  return <Icon width={iconSize} height={iconSize} {...props} />;
+  return <Icon width={iconSize} height={iconSize} fill="#171b1e" {...props} />;
 };
