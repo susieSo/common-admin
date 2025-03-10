@@ -269,7 +269,7 @@ const SidebarTrigger = React.forwardRef<
     <Button
       ref={ref}
       data-sidebar="trigger"
-      variant="secondary1"
+      variant="secondary"
       className={cn("absolute h-5 w-5 mt-2 p-4", className)}
       onClick={(event) => {
         onClick?.(event);
@@ -511,14 +511,14 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = "SidebarMenuItem";
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full h-auto items-center gap-2 overflow-hidden rounded-md py-5 px-6 text-left text-base outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-medium data-[active=true]:text-primary-2 group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0",
+  "peer/menu-button flex w-full h-auto items-center gap-2 overflow-hidden rounded-md py-5 px-6 text-left text-base outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-medium data-[active=true]:text-primary-cyan group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:shrink-0",
   {
     variants: {
       variant: {
         default: "text-white",
         outline:
           "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
-        active: "text-primary-2",
+        active: "text-primary-cyan",
       },
       size: {
         default: "text-base",
@@ -706,14 +706,14 @@ const SidebarMenuSubItem = React.forwardRef<
 SidebarMenuSubItem.displayName = "SidebarMenuSubItem";
 
 const sidebarMenuSubButtonVariants = cva(
-  "flex w-full h-auto -translate-x-px items-center overflow-hidden rounded-md pl-14 pb-3 text-white outline-none ring-sidebar-ring hover:text-primary-2 focus-visible:ring-2  disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0 data-[active=true]:text-primary-2",
+  "flex w-full h-auto -translate-x-px items-center overflow-hidden rounded-md pl-14 pb-3 text-white outline-none ring-sidebar-ring hover:text-primary-cyan focus-visible:ring-2  disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0 data-[active=true]:text-primary-cyan",
   {
     variants: {
       variant: {
         default: "text-white",
         outline:
           "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
-        active: "text-primary-2",
+        active: "text-primary-cyan",
       },
       size: {
         default: "text-sm",
