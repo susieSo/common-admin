@@ -3,6 +3,7 @@
 import { CustomIcon } from "@/components/Common/CustomIcon";
 import { H2 } from "@/components/Common/Typography";
 import { FormInput } from "@/components/Form/form-input";
+import { FormSelect } from "@/components/Form/form-select";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +14,11 @@ const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
+  email: z
+    .string({
+      required_error: "Please select an email to display.",
+    })
+    .email(),
 });
 
 export default function Home() {
@@ -70,7 +76,13 @@ export default function Home() {
                 type: "submit",
                 // onClick: () => handleSearch()
               }}
-              className="w-1/2"
+              className="w-1/4"
+            />
+            <FormSelect
+              label="select"
+              form={form}
+              name="email"
+              className="w-1/4"
             />
           </form>
         </Form>
