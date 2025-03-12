@@ -6,7 +6,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
-import { CustomIcon } from "../Common/CustomIcon";
+import { Icon } from "../Common/Icon";
 
 const Select = SelectPrimitive.Root;
 
@@ -58,7 +58,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <CustomIcon
+      <Icon
         className="transition-transform duration-200 data-[state=open]:rotate-180"
         iconType="arrowFillDown"
         size="sm"
@@ -161,7 +161,7 @@ const SelectItem = React.forwardRef<
   >
     <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <CustomIcon iconType="check" size="m" fill="#06C8BB" />
+        <Icon iconType="check" size="m" fill="#06C8BB" />
       </SelectPrimitive.ItemIndicator>
     </span>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

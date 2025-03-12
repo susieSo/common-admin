@@ -41,21 +41,21 @@ export const IconTypes = {
   arrowFillUp: Icons.icArrowFillUp,
 } as const;
 
-type IconType = keyof typeof IconTypes;
+type IconTypes = keyof typeof IconTypes;
 
-export type CustomIconType = ForwardRefExoticComponent<
-  Omit<CustomIconProps, "ref"> & RefAttributes<SVGSVGElement>
+export type IconType = ForwardRefExoticComponent<
+  Omit<IconProps, "ref"> & RefAttributes<SVGSVGElement>
 >;
 
-interface CustomIconProps extends React.SVGAttributes<SVGElement> {
-  iconType: IconType;
+interface IconProps extends React.SVGAttributes<SVGElement> {
+  iconType: IconTypes;
   fill?: string;
   stroke?: string;
   size: keyof typeof IconSize;
   className?: string;
 }
 
-export const CustomIcon = ({ iconType, size, ...props }: CustomIconProps) => {
+export const Icon = ({ iconType, size, ...props }: IconProps) => {
   const Icon = IconTypes[iconType];
   const iconSize = IconSize[size];
 

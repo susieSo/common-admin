@@ -10,7 +10,7 @@ import {
 import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { Input } from "../ui/input";
 import { InputHTMLAttributes } from "react";
-import { CustomIcon, IconTypes } from "../Common/CustomIcon";
+import { Icon, IconTypes } from "../Common/Icon";
 import { Button } from "../ui/button";
 
 type ActionButtonProps = {
@@ -59,7 +59,7 @@ export const FormInput = <T extends FieldValues, U>({
                 <div className="relative">
                   {leftIcon && (
                     <div className="absolute left-4 top-1/2 -translate-y-1/2">
-                      <CustomIcon iconType={leftIcon} size="sm" />
+                      <Icon iconType={leftIcon} size="sm" />
                     </div>
                   )}
                   <Input
@@ -78,7 +78,7 @@ export const FormInput = <T extends FieldValues, U>({
                         variant={actionButton.variant || "ghost"}
                         onClick={actionButton.onClick}
                       >
-                        <CustomIcon iconType={actionButton.icon} size="sm" />
+                        <Icon iconType={actionButton.icon} size="sm" />
                       </Button>
                     </div>
                   )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomIcon } from "@/components/Common/CustomIcon";
+import { Icon } from "@/components/Common/Icon";
 import { H2 } from "@/components/Common/Typography";
 import { FormInput } from "@/components/Form/form-input";
 import { FormSelect } from "@/components/Form/form-select";
@@ -39,9 +39,9 @@ export default function Home() {
         <H2>Buttons</H2>
         <div className="flex gap-4 items-end">
           <Button variant="gradient" size="xl">
-            <CustomIcon iconType="setting" size="m" fill="white" />
+            <Icon iconType="setting" size="m" fill="white" />
             Xl / CTA / Icon + Text
-            <CustomIcon iconType="setting" size="m" fill="white" />
+            <Icon iconType="setting" size="m" fill="white" />
           </Button>
           <Button variant="default" size="xl">
             Xl / Primary

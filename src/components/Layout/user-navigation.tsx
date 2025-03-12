@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CustomIcon } from "../Common/CustomIcon";
+import { Icon } from "../Common/Icon";
 
 export function UserNavigation() {
   return (
@@ -8,7 +8,7 @@ export function UserNavigation() {
         <li>
           <Link href="/mypage" className="flex items-center gap-1">
             <span>
-              <CustomIcon iconType="personStroke" size="s" fill="#60799A" />
+              <Icon iconType="personStroke" size="s" fill="#60799A" />
             </span>
             <p>내정보</p>
           </Link>
@@ -16,7 +16,7 @@ export function UserNavigation() {
         <li>
           <Link href="/mypage" className="flex items-center gap-1">
             <span>
-              <CustomIcon iconType="setting" size="s" fill="#60799A" />
+              <Icon iconType="setting" size="s" fill="#60799A" />
             </span>
             <p>계정관리</p>
           </Link>
@@ -24,7 +24,7 @@ export function UserNavigation() {
         <li>
           <Link href="/mypage" className="flex items-center gap-1">
             <span>
-              <CustomIcon iconType="logout" size="s" fill="#60799A" />
+              <Icon iconType="logout" size="s" fill="#60799A" />
             </span>
             <p>내정보</p>
           </Link>

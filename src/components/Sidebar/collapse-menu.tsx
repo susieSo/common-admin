@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuSubButton,
 } from "@/components/ui/sidebar";
-import { CustomIcon } from "../Common/CustomIcon";
+import { Icon } from "../Common/Icon";
 
 type Submenu = {
   href: string;
@@ -29,7 +29,7 @@ interface CollapseMenuButtonProps {
 }
 
 export function CollapseMenuButton({
-  icon: Icon,
+  icon,
   label,
   submenus,
 }: CollapseMenuButtonProps) {
@@ -51,11 +51,11 @@ export function CollapseMenuButton({
         <SidebarMenuButton variant={isSubmenuActive ? "active" : "default"}>
           <div className="w-full items-center flex justify-between">
             <div className="flex items-center gap-2">
-              <span>{Icon}</span>
+              <span>{icon}</span>
               <p className={cn("truncate")}>{label}</p>
             </div>
             <div className={cn("whitespace-nowrap")}>
-              <CustomIcon
+              <Icon
                 iconType="chevronUp"
                 size="sm"
                 className="transition-transform duration-200"

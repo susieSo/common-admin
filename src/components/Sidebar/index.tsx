@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Menu } from "./menu";
 
-export function CustomSidebar() {
+export function MenuSidebar() {
   return (
     <>
       <Sidebar variant="floating">

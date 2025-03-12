@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CustomIcon } from "../Common/CustomIcon";
+import { Icon } from "../Common/Icon";
 
 type DataType = {
   name: string;
@@ -93,7 +93,7 @@ export function DataTable() {
         </div>
         <div className="flex items-center">
           <Button variant="secondary1" size="md" className="mr-4">
-            계정권한관리 <CustomIcon iconType="setting" size="s" fill="white" />
+            계정권한관리 <Icon iconType="setting" size="s" fill="white" />
           </Button>
           <Select>
             <SelectTrigger className="w-40 h-10 mr-1">

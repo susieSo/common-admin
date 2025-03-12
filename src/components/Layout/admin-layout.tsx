@@ -2,9 +2,8 @@
 import React from "react";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { CustomSidebar } from "../Sidebar";
 import { ContentLayout } from "./content-layout";
-
+import { MenuSidebar } from "../Sidebar";
 export default function AdminLayout({
   children,
 }: {
@@ -12,7 +11,7 @@ export default function AdminLayout({
 }) {
   return (
     <SidebarProvider>
-      <CustomSidebar />
+      <MenuSidebar />
       <main className="relative w-full h-screen bg-bg-page">
         <SidebarTrigger />
         <ContentLayout>{children}</ContentLayout>

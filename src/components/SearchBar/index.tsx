@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
-import { CustomIcon } from "../Common/CustomIcon";
+import { Icon } from "../Common/Icon";
 
 const searchFormSchema = z.object({
   searchKeyword: z.string({ required_error: "검색어 키워드를 선택해주세요" }),
@@ -88,11 +88,11 @@ export function SearchBar() {
               )}
             />
             <div className="flex gap-1 items-center">
-              <Button type="submit" variant="secondary1" size="md">
-                검색 <CustomIcon iconType="search" size="s" fill="white" />
+              <Button type="submit" variant="secondary" size="md">
+                검색 <Icon iconType="search" size="s" fill="white" />
               </Button>
-              <Button variant="secondary2" size="md">
-                <CustomIcon iconType="refresh" size="s" fill="white" />
+              <Button variant="secondary" size="md">
+                <Icon iconType="refresh" size="s" fill="white" />
               </Button>
             </div>
           </div>

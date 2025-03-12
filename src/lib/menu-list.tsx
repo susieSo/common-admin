@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { CustomIcon } from "@/components/Common/CustomIcon";
+import { Icon } from "@/components/Common/Icon";
 
 type Menu = {
   href: string;
@@ -20,13 +20,13 @@ export function getMenuList(): Menu[] {
     {
       href: "/dashboard",
       label: "대시보드",
-      icon: <CustomIcon iconType="dashboard" size="m" fill="white" />,
+      icon: <Icon iconType="dashboard" size="m" fill="white" />,
       submenus: [],
     },
     {
       href: "",
       label: "앱 관리",
-      icon: <CustomIcon iconType="app" size="m" fill="white" />,
+      icon: <Icon iconType="app" size="m" fill="white" />,
       submenus: [
         {
           href: "/app/splash",
@@ -45,7 +45,7 @@ export function getMenuList(): Menu[] {
     {
       href: "",
       label: "콘텐츠 관리",
-      icon: <CustomIcon iconType="content" size="m" fill="white" />,
+      icon: <Icon iconType="content" size="m" fill="white" />,
       submenus: [
         {
           href: "/content/league",
@@ -64,7 +64,7 @@ export function getMenuList(): Menu[] {
     {
       href: "",
       label: "자산 관리",
-      icon: <CustomIcon iconType="money" size="m" fill="white" />,
+      icon: <Icon iconType="money" size="m" fill="white" />,
       submenus: [
         {
           href: "/money/digitalgoods",
@@ -83,7 +83,7 @@ export function getMenuList(): Menu[] {
     {
       href: "",
       label: "회원 관리",
-      icon: <CustomIcon iconType="member" size="m" fill="white" />,
+      icon: <Icon iconType="member" size="m" fill="white" />,
       submenus: [
         {
           href: "/member/member",
@@ -98,7 +98,7 @@ export function getMenuList(): Menu[] {
     {
       href: "",
       label: "이벤트 관리",
-      icon: <CustomIcon iconType="event" size="m" fill="white" />,
+      icon: <Icon iconType="event" size="m" fill="white" />,
       submenus: [
         {
           href: "/event/raffle",
@@ -117,7 +117,7 @@ export function getMenuList(): Menu[] {
     {
       href: "",
       label: "고객 지원",
-      icon: <CustomIcon iconType="customerCenter" size="m" fill="white" />,
+      icon: <Icon iconType="customerCenter" size="m" fill="white" />,
       submenus: [
         {
           href: "/cs/inquiry",
@@ -136,7 +136,7 @@ export function getMenuList(): Menu[] {
     {
       href: "",
       label: "통계",
-      icon: <CustomIcon iconType="graphBar" size="m" fill="white" />,
+      icon: <Icon iconType="graphBar" size="m" fill="white" />,
       submenus: [
         {
           href: "/statistics/content",

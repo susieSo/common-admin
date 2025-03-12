@@ -6,21 +6,21 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { CustomIcon } from "../Common/CustomIcon";
+import { Icon } from "../Common/Icon";
 
-interface CustomBreadCrumbProps {
+interface BreadCrumbProps {
   current: string;
   parent?: string;
 }
 
-export function CustomBreadCrumb({ current, parent }: CustomBreadCrumbProps) {
+export function BreadCrumb({ current, parent }: BreadCrumbProps) {
   return !parent ? (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link href="/">
-              <CustomIcon iconType="home" size="s" fill="#20325A" />
+              <Icon iconType="home" size="s" fill="#20325A" />
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -38,7 +38,7 @@ export function CustomBreadCrumb({ current, parent }: CustomBreadCrumbProps) {
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link href="/">
-              <CustomIcon iconType="home" size="s" fill="#20325A" />
+              <Icon iconType="home" size="s" fill="#20325A" />
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
