@@ -1,9 +1,32 @@
+"use client";
+
 import { CustomIcon } from "@/components/Common/CustomIcon";
 import { H2 } from "@/components/Common/Typography";
+import { FormInput } from "@/components/Form/form-input";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const formSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+});
 
 export default function Home() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
@@ -33,27 +56,24 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <H2>Input</H2>
-        <div className="flex gap-4 items-center flex-wrap">
-          <Input placeholder="default" />
-          <Input placeholder="default with label" label="라벨" />
-          <Input
-            placeholder="default with icon"
-            leftIcon="search"
-            rightIcon="search"
-          />
-          <Input
-            placeholder="default with helper text"
-            message="도움말영역-기본"
-          />
-          <Input
-            placeholder="default with label + helper text "
-            message="도움말영역-기본"
-            label="라벨"
-          />
-          <Input placeholder="error" error message="도움말영역-오류" />
-          <Input placeholder="disabled" disabled message="도움말영역-기본" />
-        </div>
+        <H2>Form</H2>
+        <Form {...form}>
+          <form onChange={form.handleSubmit(onSubmit)}>
+            <FormInput
+              label="Input"
+              form={form}
+              name="username"
+              type="text"
+              leftIcon="search"
+              actionButton={{
+                icon: "search",
+                type: "submit",
+                // onClick: () => handleSearch()
+              }}
+              className="w-1/2"
+            />
+          </form>
+        </Form>
       </div>
     </div>
   );
