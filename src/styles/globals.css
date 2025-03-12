@@ -11,6 +11,10 @@ body {
   background-color: var(--bg-page);
 }
 
+button {
+  line-height: normal;
+}
+
 @layer base {
   :root {
     --background: theme("colors.background");
@@ -51,7 +55,8 @@ body {
     --destructive: theme("colors.destructive.DEFAULT");
     --destructive-foreground: theme("colors.destructive.foreground");
     --border: theme("colors.border");
-    --input: theme("colors.input");
+    --input: theme("colors.input.DEFAULT");
+    --input-bg: theme("colors.input.background");
     --ring: theme("colors.ring");
     --radius: 0.5rem;
     --states-red: theme("colors.states.red");

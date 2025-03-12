@@ -36,7 +36,9 @@ export const IconTypes = {
   close: Icons.icClose,
   check: Icons.icCheck,
   chevronUp: Icons.icChevronUp,
-  ChevronDown: Icons.icChevronDown,
+  chevronDown: Icons.icChevronDown,
+  arrowFillDown: Icons.icArrowFillDown,
+  arrowFillUp: Icons.icArrowFillUp,
 } as const;
 
 type IconType = keyof typeof IconTypes;

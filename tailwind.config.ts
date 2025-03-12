@@ -65,7 +65,10 @@ export default {
           foreground: "#fafafa",
         },
         border: "#e6e6e6",
-        input: "#DADEE1",
+        input: {
+          DEFAULT: "#DADEE1",
+          background: "#fafafa",
+        },
         ring: "#0a0a0a",
         states: {
           red: "#f75741",

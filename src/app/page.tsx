@@ -37,7 +37,11 @@ export default function Home() {
         <div className="flex gap-4 items-center flex-wrap">
           <Input placeholder="default" />
           <Input placeholder="default with label" label="라벨" />
-          <Input placeholder="default with icon" iconType="search" />
+          <Input
+            placeholder="default with icon"
+            leftIcon="search"
+            rightIcon="search"
+          />
           <Input
             placeholder="default with helper text"
             message="도움말영역-기본"
