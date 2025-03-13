@@ -14,63 +14,19 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import MultipleSelector, { Option } from "@/components/ui/multi-select";
+import MultipleSelector from "@/components/ui/multi-select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+interface DummyDataProps {
+  options: { value: string; label: string }[];
+  multipleOptions: { label: string; value: string; disable: boolean }[];
+  checkboxItems: { id: string; label: string }[];
+}
 
-const OPTIONS: Option[] = [
-  {
-    value: "1",
-    label: "Option 1",
-  },
-  {
-    value: "2",
-    label: "Option 2",
-  },
-  {
-    value: "3",
-    label: "Option 3",
-    disable: true,
-  },
-  {
-    value: "4",
-    label: "Option 4",
-  },
-  {
-    value: "5",
-    label: "Option 5",
-  },
-  {
-    value: "6",
-    label: "Option 6",
-  },
-  {
-    value: "7",
-    label: "Option 7",
-  },
-  {
-    value: "8",
-    label: "Option 8",
-  },
-];
-
-const CHECKBOX_ITEMS = [
-  {
-    id: "recents",
-    label: "Recents",
-  },
-  {
-    id: "home",
-    label: "Home",
-  },
-  {
-    id: "applications",
-    label: "Applications",
-  },
-] as const;
-
-const optionSchema = z.object({
+const multipleOptionsSchema = z.object({
   label: z.string(),
   value: z.string(),
   disable: z.boolean().optional(),
@@ -80,31 +36,55 @@ const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  email: z
+  options: z
     .string({
       required_error: "Please select an email to display.",
     })
     .email(),
-  options: z.array(optionSchema).min(1),
-  items: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: "You have to select at least one item.",
+  multipleOptions: z.array(multipleOptionsSchema).min(1),
+  checkboxItems: z
+    .array(z.string())
+    .refine((value) => value.some((item) => item), {
+      message: "You have to select at least one item.",
+    }),
+  type: z.enum(["all", "mentions", "none"], {
+    required_error: "You need to select a notification type.",
   }),
 });
 
 export default function Home() {
+  const [dummyData, setDummyData] = useState<DummyDataProps>({
+    options: [],
+    multipleOptions: [],
+    checkboxItems: [],
+  });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
-      email: "",
-      options: [],
-      items: [],
+      options: "",
+      multipleOptions: [],
+      checkboxItems: [],
+      type: "all",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
+
+  useEffect(() => {
+    fetch("api/dummy")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data);
+        setDummyData(data.data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch dummy data:", error);
+      });
+  }, []);
 
   return (
     <div className="flex flex-col gap-8">
@@ -155,22 +135,23 @@ export default function Home() {
               className="w-1/4"
             />
             <FormSelect
-              label="select"
+              label="options"
               form={form}
-              name="email"
+              name="options"
+              options={dummyData?.options || []}
               placeholder="select an email"
               className="w-1/4"
             />
             <FormField
               control={form.control}
-              name="options"
+              name="multipleOptions"
               render={({ field, fieldState: { error } }) => (
                 <FormItem>
                   <FormLabel>multiple select</FormLabel>
                   <FormControl>
                     <MultipleSelector
                       {...field}
-                      defaultOptions={OPTIONS}
+                      options={dummyData?.multipleOptions || []}
                       placeholder="Select options you like..."
                       emptyIndicator={
                         <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
@@ -187,12 +168,12 @@ export default function Home() {
             />
             <FormField
               control={form.control}
-              name="items"
+              name="checkboxItems"
               render={({ field, fieldState: { error } }) => (
                 <FormItem>
                   <FormLabel>Checkbox</FormLabel>
                   <div className="flex flex-col">
-                    {CHECKBOX_ITEMS.map((item) => (
+                    {(dummyData?.checkboxItems || []).map((item) => (
                       <div
                         key={item.id}
                         className="flex items-center space-x-1.5"
@@ -219,6 +200,25 @@ export default function Home() {
                     ))}
                   </div>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Radio</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <RadioGroupItem value="all">All</RadioGroupItem>
+                      <RadioGroupItem value="mentions">Mentions</RadioGroupItem>
+                      <RadioGroupItem value="none">None</RadioGroupItem>
+                    </RadioGroup>
+                  </FormControl>
                 </FormItem>
               )}
             />
