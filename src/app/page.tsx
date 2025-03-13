@@ -5,6 +5,7 @@ import { H2 } from "@/components/Common/Typography";
 import { FormInput } from "@/components/Form/form-input";
 import { FormSelect } from "@/components/Form/form-select";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -54,6 +55,21 @@ const OPTIONS: Option[] = [
   },
 ];
 
+const CHECKBOX_ITEMS = [
+  {
+    id: "recents",
+    label: "Recents",
+  },
+  {
+    id: "home",
+    label: "Home",
+  },
+  {
+    id: "applications",
+    label: "Applications",
+  },
+] as const;
+
 const optionSchema = z.object({
   label: z.string(),
   value: z.string(),
@@ -70,6 +86,9 @@ const formSchema = z.object({
     })
     .email(),
   options: z.array(optionSchema).min(1),
+  items: z.array(z.string()).refine((value) => value.some((item) => item), {
+    message: "You have to select at least one item.",
+  }),
 });
 
 export default function Home() {
@@ -77,6 +96,9 @@ export default function Home() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      email: "",
+      options: [],
+      items: [],
     },
   });
 
@@ -115,7 +137,10 @@ export default function Home() {
       <div className="flex flex-col gap-4">
         <H2>Form</H2>
         <Form {...form}>
-          <form onChange={form.handleSubmit(onSubmit)}>
+          <form
+            onChange={form.handleSubmit(onSubmit)}
+            className="flex gap-4 flex-wrap flex-col"
+          >
             <FormInput
               label="Input"
               form={form}
@@ -139,7 +164,7 @@ export default function Home() {
             <FormField
               control={form.control}
               name="options"
-              render={({ field }) => (
+              render={({ field, fieldState: { error } }) => (
                 <FormItem>
                   <FormLabel>multiple select</FormLabel>
                   <FormControl>
@@ -153,8 +178,46 @@ export default function Home() {
                         </p>
                       }
                       className="w-1/2"
+                      error={!!error}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="items"
+              render={({ field, fieldState: { error } }) => (
+                <FormItem>
+                  <FormLabel>Checkbox</FormLabel>
+                  <div className="flex flex-col">
+                    {CHECKBOX_ITEMS.map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex items-center space-x-1.5"
+                      >
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value?.includes(item.id)}
+                            onCheckedChange={(checked) => {
+                              return checked
+                                ? field.onChange([...field.value, item.id])
+                                : field.onChange(
+                                    field.value?.filter(
+                                      (value) => value !== item.id
+                                    )
+                                  );
+                            }}
+                            error={!!error}
+                          />
+                        </FormControl>
+                        <FormLabel className="text-sm text-black-700">
+                          {item.label}
+                        </FormLabel>
+                      </div>
+                    ))}
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}

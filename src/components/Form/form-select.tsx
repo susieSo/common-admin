@@ -39,13 +39,13 @@ export const FormSelect = <T extends FieldValues, U>({
       <FormField
         control={form.control}
         name={name}
-        render={({ field }) => {
+        render={({ field, fieldState: { error } }) => {
           return (
             <FormItem className={className}>
               {label && <FormLabel>{label}</FormLabel>}
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
-                  <SelectTrigger size={size}>
+                  <SelectTrigger size={size} error={!!error}>
                     <SelectValue placeholder={placeholder} />
                   </SelectTrigger>
                 </FormControl>

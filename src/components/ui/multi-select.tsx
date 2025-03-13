@@ -82,6 +82,7 @@ interface MultipleSelectorProps {
   >;
   /** hide the clear all button. */
   hideClearAllButton?: boolean;
+  error?: boolean;
 }
 
 export interface MultipleSelectorRef {
@@ -204,6 +205,7 @@ const MultipleSelector = React.forwardRef<
       commandProps,
       inputProps,
       hideClearAllButton = false,
+      error = false,
     }: MultipleSelectorProps,
     ref: React.Ref<MultipleSelectorRef>
   ) => {
@@ -461,6 +463,9 @@ const MultipleSelector = React.forwardRef<
             {
               "px-3 py-2": selected.length !== 0,
               "cursor-text": !disabled && selected.length !== 0,
+            },
+            {
+              "border-states-red": error,
             },
             className
           )}
