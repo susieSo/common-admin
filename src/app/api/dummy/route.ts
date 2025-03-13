@@ -1,6 +1,7 @@
 import {
   CHECKBOX_ITEMS,
   MULTIPLE_SELECT_OPTIONS,
+  RADIO_ITEMS,
   SELECT_OPTIONS,
 } from "@/data/dummyData";
 import { NextResponse } from "next/server";
@@ -11,6 +12,7 @@ export async function GET() {
       options: SELECT_OPTIONS,
       multipleOptions: MULTIPLE_SELECT_OPTIONS,
       checkboxItems: CHECKBOX_ITEMS,
+      radioItems: RADIO_ITEMS,
     },
   });
 }

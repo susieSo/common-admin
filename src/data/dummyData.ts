@@ -63,5 +63,22 @@ export const CHECKBOX_ITEMS = [
   {
     id: "applications",
     label: "Applications",
+    disable: true,
   },
 ] as const;
+
+export const RADIO_ITEMS = [
+  {
+    id: "all",
+    label: "all",
+  },
+  {
+    id: "mentions",
+    label: "mentions",
+  },
+  {
+    id: "none",
+    label: "none",
+    disable: true,
+  },
+];

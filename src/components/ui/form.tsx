@@ -14,6 +14,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
+import { cva } from "class-variance-authority";
 
 const Form = FormProvider;
 
@@ -86,16 +87,39 @@ const FormItem = React.forwardRef<
 });
 FormItem.displayName = "FormItem";
 
+const formLabelVariants = cva("text-black-700", {
+  variants: {
+    size: {
+      xs: "text-[0.813rem]",
+      sm: "text-sm",
+      md: "text-base",
+      lg: "text-lg",
+      xl: "text-xl",
+    },
+  },
+  defaultVariants: {
+    size: "sm",
+  },
+});
+
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
->(({ className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> & {
+    size?: "xs" | "sm" | "md" | "lg" | "xl";
+  }
+>(({ className, size, ...props }, ref) => {
   const { error, formItemId } = useFormField();
 
   return (
     <Label
       ref={ref}
-      className={cn(error && "text-states-red", className)}
+      className={cn(
+        formLabelVariants({
+          size,
+        }),
+        error && "text-states-red",
+        className
+      )}
       htmlFor={formItemId}
       {...props}
     />

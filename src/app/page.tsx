@@ -23,7 +23,8 @@ import { z } from "zod";
 interface DummyDataProps {
   options: { value: string; label: string }[];
   multipleOptions: { label: string; value: string; disable: boolean }[];
-  checkboxItems: { id: string; label: string }[];
+  checkboxItems: { id: string; label: string; disable: boolean }[];
+  radioItems: { id: string; label: string; disable: boolean }[];
 }
 
 const multipleOptionsSchema = z.object({
@@ -47,9 +48,9 @@ const formSchema = z.object({
     .refine((value) => value.some((item) => item), {
       message: "You have to select at least one item.",
     }),
-  type: z.enum(["all", "mentions", "none"], {
-    required_error: "You need to select a notification type.",
-  }),
+  radioItems: z
+    .array(z.string())
+    .min(1, { message: "You have to select at least one item." }),
 });
 
 export default function Home() {
@@ -57,6 +58,7 @@ export default function Home() {
     options: [],
     multipleOptions: [],
     checkboxItems: [],
+    radioItems: [],
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -66,7 +68,7 @@ export default function Home() {
       options: "",
       multipleOptions: [],
       checkboxItems: [],
-      type: "all",
+      radioItems: [],
     },
   });
 
@@ -180,6 +182,7 @@ export default function Home() {
                       >
                         <FormControl>
                           <Checkbox
+                            disabled={item.disable}
                             checked={field.value?.includes(item.id)}
                             onCheckedChange={(checked) => {
                               return checked
@@ -205,20 +208,33 @@ export default function Home() {
             />
             <FormField
               control={form.control}
-              name="type"
-              render={({ field }) => (
+              name="radioItems"
+              render={({ field, fieldState: { error } }) => (
                 <FormItem>
                   <FormLabel>Radio</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <RadioGroupItem value="all">All</RadioGroupItem>
-                      <RadioGroupItem value="mentions">Mentions</RadioGroupItem>
-                      <RadioGroupItem value="none">None</RadioGroupItem>
-                    </RadioGroup>
-                  </FormControl>
+                  <div className="flex flex-col">
+                    {(dummyData?.radioItems || []).map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex items-center space-x-2"
+                      >
+                        <FormControl>
+                          <RadioGroup onValueChange={field.onChange}>
+                            <RadioGroupItem
+                              value={item.label}
+                              disabled={item.disable}
+                              error={!!error}
+                              size="sm"
+                            >
+                              {item.label}
+                            </RadioGroupItem>
+                          </RadioGroup>
+                        </FormControl>
+                        <FormLabel size="md">{item.label}</FormLabel>
+                      </div>
+                    ))}
+                  </div>
+                  <FormMessage />
                 </FormItem>
               )}
             />
