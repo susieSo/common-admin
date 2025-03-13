@@ -5,10 +5,60 @@ import { H2 } from "@/components/Common/Typography";
 import { FormInput } from "@/components/Form/form-input";
 import { FormSelect } from "@/components/Form/form-select";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import MultipleSelector, { Option } from "@/components/ui/multi-select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+const OPTIONS: Option[] = [
+  {
+    value: "1",
+    label: "Option 1",
+  },
+  {
+    value: "2",
+    label: "Option 2",
+  },
+  {
+    value: "3",
+    label: "Option 3",
+    disable: true,
+  },
+  {
+    value: "4",
+    label: "Option 4",
+  },
+  {
+    value: "5",
+    label: "Option 5",
+  },
+  {
+    value: "6",
+    label: "Option 6",
+  },
+  {
+    value: "7",
+    label: "Option 7",
+  },
+  {
+    value: "8",
+    label: "Option 8",
+  },
+];
+
+const optionSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+  disable: z.boolean().optional(),
+});
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -19,6 +69,7 @@ const formSchema = z.object({
       required_error: "Please select an email to display.",
     })
     .email(),
+  options: z.array(optionSchema).min(1),
 });
 
 export default function Home() {
@@ -82,7 +133,31 @@ export default function Home() {
               label="select"
               form={form}
               name="email"
+              placeholder="select an email"
               className="w-1/4"
+            />
+            <FormField
+              control={form.control}
+              name="options"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>multiple select</FormLabel>
+                  <FormControl>
+                    <MultipleSelector
+                      {...field}
+                      defaultOptions={OPTIONS}
+                      placeholder="Select options you like..."
+                      emptyIndicator={
+                        <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                          no results found.
+                        </p>
+                      }
+                      className="w-1/2"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </form>
         </Form>

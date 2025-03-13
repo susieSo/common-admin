@@ -20,8 +20,8 @@ const selectTriggerVariants = cva(
     variants: {
       size: {
         md: "w-full h-10 px-3 py-2 text-sm",
-        sm: "w-full h-8 px-3 py-1.5 text-[13px]",
-        xs: "w-min h-min p-0 text-[13px] bg-transparent border-none outline-none shadow-none text-primary-cyan data-[state=open]:text-primary-cyan",
+        sm: "w-full h-8 px-3 py-1.5 text-[0.813rem]",
+        xs: "w-min h-min p-0 text-[0.813rem] bg-transparent border-none outline-none shadow-none text-primary-cyan data-[state=open]:text-primary-cyan",
       },
       error: {
         true: "border-states-red focus:border-states-red data-[state=open]:border-states-red",
@@ -141,7 +141,7 @@ const SelectLabel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cn("py-3 text-[13px] font-medium text-black-900", className)}
+    className={cn("py-3 text-[0.813rem] font-medium text-black-900", className)}
     {...props}
   />
 ));

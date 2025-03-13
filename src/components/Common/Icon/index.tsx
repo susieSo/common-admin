@@ -2,6 +2,7 @@ import React, { ForwardRefExoticComponent, RefAttributes } from "react";
 import * as Icons from "../../../../public/icons";
 
 const IconSize = {
+  xs: 12,
   s: 16,
   sm: 20,
   m: 24,
