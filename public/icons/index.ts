@@ -14,6 +14,7 @@ export { default as icTrash } from "./ic-trash.svg";
 export { default as icEdit } from "./ic-edit.svg";
 export { default as icHome } from "./ic-home.svg";
 export { default as icPlus } from "./ic-plus.svg";
+export { default as icMinus } from "./ic-minus.svg";
 export { default as icSearch } from "./ic-search.svg";
 export { default as icRefresh } from "./ic-refresh.svg";
 export { default as icNoImg } from "./ic-noimg.svg";

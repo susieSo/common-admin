@@ -30,6 +30,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ko } from "date-fns/locale";
+import { Stepper } from "@/components/ui/stepper";
 interface DummyDataProps {
   options: { value: string; label: string }[];
   multipleOptions: { label: string; value: string; disable?: boolean }[];
@@ -38,6 +39,7 @@ interface DummyDataProps {
   toggleItems: boolean;
   datepicker: Date;
   datepickerRange: { from: Date; to: Date };
+  stepper: number;
 }
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -75,6 +77,9 @@ const formSchema = z.object({
     from: z.date(),
     to: z.date(),
   }),
+  stepper: z.number().min(0, {
+    message: "Stepper must be at least 0.",
+  }),
 });
 
 export default function Home() {
@@ -86,6 +91,7 @@ export default function Home() {
     toggleItems: false,
     datepicker: new Date(),
     datepickerRange: { from: new Date(), to: new Date() },
+    stepper: 0,
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -110,7 +116,7 @@ export default function Home() {
     fetch("api/dummy")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         setDummyData(data.data);
       })
       .catch((error) => {
@@ -271,6 +277,7 @@ export default function Home() {
               control={form.control}
               name="toggleItems"
               render={({ field, fieldState: { error } }) => {
+                console.log(field);
                 return (
                   <FormItem>
                     <FormLabel>Toggle Switch</FormLabel>
@@ -388,6 +395,21 @@ export default function Home() {
                   </div>
                 </FormItem>
               )}
+            />
+            <FormField
+              control={form.control}
+              name="stepper"
+              render={({ field }) => {
+                console.log(field);
+                return (
+                  <FormItem>
+                    <FormLabel>Stepper</FormLabel>
+                    <FormControl>
+                      <Stepper value={field.value} onChange={field.onChange} />
+                    </FormControl>
+                  </FormItem>
+                );
+              }}
             />
           </form>
         </Form>

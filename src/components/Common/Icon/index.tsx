@@ -26,6 +26,7 @@ export const IconTypes = {
   edit: Icons.icEdit,
   home: Icons.icHome,
   plus: Icons.icPlus,
+  minus: Icons.icMinus,
   search: Icons.icSearch,
   refresh: Icons.icRefresh,
   noImg: Icons.icNoImg,
