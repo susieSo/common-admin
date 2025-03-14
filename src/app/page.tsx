@@ -16,22 +16,18 @@ import {
 } from "@/components/ui/form";
 import MultipleSelector from "@/components/ui/multi-select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Switch } from "@/components/ui/switch";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 interface DummyDataProps {
   options: { value: string; label: string }[];
-  multipleOptions: { label: string; value: string; disable: boolean }[];
-  checkboxItems: { id: string; label: string; disable: boolean }[];
-  radioItems: { id: string; label: string; disable: boolean }[];
+  multipleOptions: { label: string; value: string; disable?: boolean }[];
+  checkboxItems: { id: string; label: string; disable?: boolean }[];
+  radioItems: { id: string; label: string; disable?: boolean }[];
+  toggleItems: boolean;
 }
-
-const multipleOptionsSchema = z.object({
-  label: z.string(),
-  value: z.string(),
-  disable: z.boolean().optional(),
-});
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -42,15 +38,26 @@ const formSchema = z.object({
       required_error: "Please select an email to display.",
     })
     .email(),
-  multipleOptions: z.array(multipleOptionsSchema).min(1),
+  multipleOptions: z
+    .array(
+      z.object({
+        label: z.string(),
+        value: z.string(),
+        disable: z.boolean().optional(),
+      })
+    )
+    .min(1),
   checkboxItems: z
     .array(z.string())
     .refine((value) => value.some((item) => item), {
       message: "You have to select at least one item.",
     }),
-  radioItems: z
-    .array(z.string())
-    .min(1, { message: "You have to select at least one item." }),
+  radioItems: z.enum(["all", "mentions", "none"], {
+    required_error: "You need to select a notification type.",
+  }),
+  toggleItems: z.boolean().refine((value) => value, {
+    message: "You have to select at least one item.",
+  }),
 });
 
 export default function Home() {
@@ -59,6 +66,7 @@ export default function Home() {
     multipleOptions: [],
     checkboxItems: [],
     radioItems: [],
+    toggleItems: false,
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -68,7 +76,8 @@ export default function Home() {
       options: "",
       multipleOptions: [],
       checkboxItems: [],
-      radioItems: [],
+      radioItems: "all",
+      toggleItems: false,
     },
   });
 
@@ -224,7 +233,6 @@ export default function Home() {
                               value={item.label}
                               disabled={item.disable}
                               error={!!error}
-                              size="sm"
                             >
                               {item.label}
                             </RadioGroupItem>
@@ -237,6 +245,28 @@ export default function Home() {
                   <FormMessage />
                 </FormItem>
               )}
+            />
+            <FormField
+              control={form.control}
+              name="toggleItems"
+              render={({ field, fieldState: { error } }) => {
+                return (
+                  <FormItem>
+                    <FormLabel>Toggle Switch</FormLabel>
+                    <div className="flex flex-row items-center gap-2">
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          error={!!error}
+                        />
+                      </FormControl>
+                      <FormLabel>Marketing emails</FormLabel>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
           </form>
         </Form>
