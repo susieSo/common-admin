@@ -5,6 +5,7 @@ import { H2 } from "@/components/Common/Typography";
 import { FormInput } from "@/components/Form/form-input";
 import { FormSelect } from "@/components/Form/form-select";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -15,20 +16,29 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import MultipleSelector from "@/components/ui/multi-select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { ko } from "date-fns/locale";
 interface DummyDataProps {
   options: { value: string; label: string }[];
   multipleOptions: { label: string; value: string; disable?: boolean }[];
   checkboxItems: { id: string; label: string; disable?: boolean }[];
   radioItems: { id: string; label: string; disable?: boolean }[];
   toggleItems: boolean;
+  datepicker: Date;
+  datepickerRange: { from: Date; to: Date };
 }
-
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
@@ -58,6 +68,13 @@ const formSchema = z.object({
   toggleItems: z.boolean().refine((value) => value, {
     message: "You have to select at least one item.",
   }),
+  datepicker: z.date({
+    required_error: "A date of birth is required.",
+  }),
+  datepickerRange: z.object({
+    from: z.date(),
+    to: z.date(),
+  }),
 });
 
 export default function Home() {
@@ -67,6 +84,8 @@ export default function Home() {
     checkboxItems: [],
     radioItems: [],
     toggleItems: false,
+    datepicker: new Date(),
+    datepickerRange: { from: new Date(), to: new Date() },
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -78,6 +97,8 @@ export default function Home() {
       checkboxItems: [],
       radioItems: "all",
       toggleItems: false,
+      datepicker: new Date(),
+      datepickerRange: { from: new Date(), to: new Date() },
     },
   });
 
@@ -267,6 +288,106 @@ export default function Home() {
                   </FormItem>
                 );
               }}
+            />
+            <FormField
+              control={form.control}
+              name="datepicker"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Datepicker</FormLabel>
+                  <div className="flex flex-row items-center gap-2">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-80 px-4 py-3 flex items-center justify-between border-black-200 text-black-400 data-[state=open]:border-primary-cyan",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "yyyy.MM.dd", { locale: ko })
+                            ) : (
+                              <span>YYYY.MM.DD</span>
+                            )}
+                            <Icon iconType="calendar" size="m" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          locale={ko}
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="datepickerRange"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Datepicker</FormLabel>
+                  <div className="flex flex-row items-center gap-2">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-80 px-4 py-3 flex items-center justify-between border-black-200 text-black-400 data-[state=open]:border-primary-cyan",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value.from ? (
+                              field.value.to ? (
+                                <>
+                                  {format(field.value.from, "y.LL.dd", {
+                                    locale: ko,
+                                  })}{" "}
+                                  -{" "}
+                                  {format(field.value.to, "y.LL.dd", {
+                                    locale: ko,
+                                  })}
+                                </>
+                              ) : (
+                                format(field.value.from, "y.LL.dd", {
+                                  locale: ko,
+                                })
+                              )
+                            ) : (
+                              <span>YYYY.MM.DD</span>
+                            )}
+                            <Icon iconType="calendar" size="m" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          locale={ko}
+                          mode="range"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </FormItem>
+              )}
             />
           </form>
         </Form>

@@ -38,6 +38,8 @@ export const IconTypes = {
   check: Icons.icCheck,
   chevronUp: Icons.icChevronUp,
   chevronDown: Icons.icChevronDown,
+  chevronLeft: Icons.icChevronLeft,
+  chevronRight: Icons.icChevronRight,
   arrowFillDown: Icons.icArrowFillDown,
   arrowFillUp: Icons.icArrowFillUp,
 } as const;

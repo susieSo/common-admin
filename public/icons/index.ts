@@ -26,5 +26,7 @@ export { default as icClose } from "./ic-close.svg";
 export { default as icCheck } from "./ic-check.svg";
 export { default as icChevronUp } from "./ic-chevron-up.svg";
 export { default as icChevronDown } from "./ic-chevron-down.svg";
+export { default as icChevronLeft } from "./ic-chevron-left.svg";
+export { default as icChevronRight } from "./ic-chevron-right.svg";
 export { default as icArrowFillDown } from "./ic-arrow-fill-down.svg";
 export { default as icArrowFillUp } from "./ic-arrow-fill-up.svg";
