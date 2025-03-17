@@ -36,11 +36,8 @@ interface DummyDataProps {
   multipleOptions: { label: string; value: string; disable?: boolean }[];
   checkboxItems: { id: string; label: string; disable?: boolean }[];
   radioItems: { id: string; label: string; disable?: boolean }[];
-  toggleItems: boolean;
-  datepicker: Date;
-  datepickerRange: { from: Date; to: Date };
-  stepper: number;
 }
+
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
@@ -73,10 +70,15 @@ const formSchema = z.object({
   datepicker: z.date({
     required_error: "A date of birth is required.",
   }),
-  datepickerRange: z.object({
-    from: z.date(),
-    to: z.date(),
-  }),
+  datepickerRange: z.object(
+    {
+      from: z.date(),
+      to: z.date(),
+    },
+    {
+      required_error: "A date of birth is required.",
+    }
+  ),
   stepper: z.number().min(0, {
     message: "Stepper must be at least 0.",
   }),
@@ -88,10 +90,6 @@ export default function Home() {
     multipleOptions: [],
     checkboxItems: [],
     radioItems: [],
-    toggleItems: false,
-    datepicker: new Date(),
-    datepickerRange: { from: new Date(), to: new Date() },
-    stepper: 0,
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -103,8 +101,10 @@ export default function Home() {
       checkboxItems: [],
       radioItems: "all",
       toggleItems: false,
-      datepicker: new Date(),
-      datepickerRange: { from: new Date(), to: new Date() },
+      // datepicker: new Date(),
+      // datepickerRange: { from: new Date(), to: new Date() },
+      datepickerRange: { from: undefined, to: undefined },
+      stepper: 0,
     },
   });
 
@@ -277,7 +277,6 @@ export default function Home() {
               control={form.control}
               name="toggleItems"
               render={({ field, fieldState: { error } }) => {
-                console.log(field);
                 return (
                   <FormItem>
                     <FormLabel>Toggle Switch</FormLabel>
@@ -299,102 +298,115 @@ export default function Home() {
             <FormField
               control={form.control}
               name="datepicker"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Datepicker</FormLabel>
-                  <div className="flex flex-row items-center gap-2">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "w-80 px-4 py-3 flex items-center justify-between border-black-200 text-black-400 data-[state=open]:border-primary-cyan",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "yyyy.MM.dd", { locale: ko })
-                            ) : (
-                              <span>YYYY.MM.DD</span>
-                            )}
-                            <Icon iconType="calendar" size="m" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          locale={ko}
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </FormItem>
-              )}
+              render={({ field, fieldState: { error } }) => {
+                return (
+                  <FormItem>
+                    <FormLabel>Datepicker</FormLabel>
+                    <div className="flex flex-row items-center gap-2">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "w-80 px-4 py-3 flex items-center justify-between border-primary-cyan text-black-900 data-[state=open]:border-primary-cyan",
+                                !field.value &&
+                                  "border-black-200 text-black-400",
+                                error && "border-states-red"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "yyyy.MM.dd", {
+                                  locale: ko,
+                                })
+                              ) : (
+                                <span>YYYY.MM.DD</span>
+                              )}
+                              <Icon iconType="calendar" size="m" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            locale={ko}
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
             <FormField
               control={form.control}
               name="datepickerRange"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Datepicker</FormLabel>
-                  <div className="flex flex-row items-center gap-2">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "w-80 px-4 py-3 flex items-center justify-between border-black-200 text-black-400 data-[state=open]:border-primary-cyan",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value.from ? (
-                              field.value.to ? (
-                                <>
-                                  {format(field.value.from, "y.LL.dd", {
+              render={({ field, fieldState: { error } }) => {
+                return (
+                  <FormItem>
+                    <FormLabel>Datepicker Range</FormLabel>
+                    <div className="flex flex-row items-center gap-2">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "w-80 px-4 py-3 flex items-center justify-between border-primary-cyan text-black-900 data-[state=open]:border-primary-cyan",
+                                !field.value.from &&
+                                  !field.value.to &&
+                                  "border-black-200 text-black-400",
+                                error && "border-states-red"
+                              )}
+                            >
+                              {field.value.from ? (
+                                field.value.to ? (
+                                  <>
+                                    {format(field.value.from, "y.LL.dd", {
+                                      locale: ko,
+                                    })}{" "}
+                                    -{" "}
+                                    {format(field.value.to, "y.LL.dd", {
+                                      locale: ko,
+                                    })}
+                                  </>
+                                ) : (
+                                  format(field.value.from, "y.LL.dd", {
                                     locale: ko,
-                                  })}{" "}
-                                  -{" "}
-                                  {format(field.value.to, "y.LL.dd", {
-                                    locale: ko,
-                                  })}
-                                </>
+                                  })
+                                )
                               ) : (
-                                format(field.value.from, "y.LL.dd", {
-                                  locale: ko,
-                                })
-                              )
-                            ) : (
-                              <span>YYYY.MM.DD</span>
-                            )}
-                            <Icon iconType="calendar" size="m" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          locale={ko}
-                          mode="range"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </FormItem>
-              )}
+                                <span>YYYY.MM.DD - YYYY.MM.DD</span>
+                              )}
+                              <Icon iconType="calendar" size="m" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            locale={ko}
+                            mode="range"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
             <FormField
               control={form.control}
