@@ -50,7 +50,7 @@ function Calendar({
         day_selected: cn(
           "bg-primary text-white hover:bg-primary-cyanDark hover:text-white focus:bg-primary-cyanDark focus:text-white rounded-full",
           props.mode === "range" &&
-            "rounded-none [&:has([aria-selected])]:rounded-full"
+            "rounded-none [&:has([aria-selected])]:rounded-full hover:rounded-none hover:bg-transparent"
         ),
         day_today: "bg-secondary-100 text-black-900 rounded-full",
         day_outside:

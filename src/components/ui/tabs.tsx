@@ -55,7 +55,7 @@ const TabsList = React.forwardRef<
 TabsList.displayName = TabsPrimitive.List.displayName;
 
 const tabsTriggerVariants = cva(
-  "inline-flex items-center justify-center text-black-300 whitespace-nowrap ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex gap-1 items-center justify-center text-black-300 whitespace-nowrap ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 box-border",
   {
     variants: {
       size: {
@@ -73,6 +73,7 @@ const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
     size?: "box" | "line";
+    data?: number;
   }
 >(({ className, size, ...props }, ref) => {
   const tabsSize = React.useContext(TabsContext);
@@ -83,7 +84,10 @@ const TabsTrigger = React.forwardRef<
       ref={ref}
       className={cn(tabsTriggerVariants({ size: finalSize }), className)}
       {...props}
-    />
+    >
+      <span>{props.children}</span>
+      {props.data && <span>{props.data}</span>}
+    </TabsPrimitive.Trigger>
   );
 });
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
