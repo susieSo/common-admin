@@ -79,7 +79,7 @@ const formSchema = z.object({
       required_error: "A date of birth is required.",
     }
   ),
-  stepper: z.number().min(0, {
+  stepper: z.number().min(1, {
     message: "Stepper must be at least 0.",
   }),
 });
@@ -411,14 +411,19 @@ export default function Home() {
             <FormField
               control={form.control}
               name="stepper"
-              render={({ field }) => {
+              render={({ field, fieldState: { error } }) => {
                 console.log(field);
                 return (
                   <FormItem>
                     <FormLabel>Stepper</FormLabel>
                     <FormControl>
-                      <Stepper value={field.value} onChange={field.onChange} />
+                      <Stepper
+                        value={field.value}
+                        onChange={field.onChange}
+                        error={!!error}
+                      />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 );
               }}
