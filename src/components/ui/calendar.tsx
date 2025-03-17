@@ -41,16 +41,16 @@ function Calendar({
         ),
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-10 w-10 p-0 font-normal aria-selected:opacity-100 hover:bg-primary-cyanDark hover:text-white focus:bg-primary-cyanDark focus:text-white",
-          props.mode === "range"
-            ? "[&:has(>.day-range-end)]:rounded-full [&:has(>.day-range-start)]:rounded-full first:[&:has([aria-selected])]:rounded-full last:[&:has([aria-selected])]:rounded-full"
-            : "[&:has([aria-selected])]:rounded-full"
+          "h-10 w-10 p-0 font-normal aria-selected:opacity-100 hover:bg-primary-cyanDark hover:text-white hover:rounded-full",
+          props.mode === "range" &&
+            "[&:has(>.day-range-end)]:rounded-full [&:has(>.day-range-start)]:rounded-full first:[&:has([aria-selected])]:rounded-full last:[&:has([aria-selected])]:rounded-full"
         ),
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",
         day_selected: cn(
-          "bg-primary text-white hover:bg-primary-cyanDark hover:text-white focus:bg-primary-cyanDark focus:text-white rounded-none",
-          props.mode === "range" && "[&:has([aria-selected])]:rounded-full"
+          "bg-primary text-white hover:bg-primary-cyanDark hover:text-white focus:bg-primary-cyanDark focus:text-white rounded-full",
+          props.mode === "range" &&
+            "rounded-none [&:has([aria-selected])]:rounded-full"
         ),
         day_today: "bg-secondary-100 text-black-900 rounded-full",
         day_outside:
