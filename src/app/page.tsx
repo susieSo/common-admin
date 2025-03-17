@@ -31,6 +31,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ko } from "date-fns/locale";
 import { Stepper } from "@/components/ui/stepper";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 interface DummyDataProps {
   options: { value: string; label: string }[];
   multipleOptions: { label: string; value: string; disable?: boolean }[];
@@ -412,7 +414,6 @@ export default function Home() {
               control={form.control}
               name="stepper"
               render={({ field, fieldState: { error } }) => {
-                console.log(field);
                 return (
                   <FormItem>
                     <FormLabel>Stepper</FormLabel>
@@ -430,6 +431,22 @@ export default function Home() {
             />
           </form>
         </Form>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <H2>Tabs</H2>
+      </div>
+      <div className="flex gap-4 items-end">
+        <Tabs defaultValue="tab1" size="box">
+          <TabsList>
+            <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+            <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+            <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+          </TabsList>
+          <TabsContent value="tab1">Tab 1</TabsContent>
+          <TabsContent value="tab2">Tab 2</TabsContent>
+          <TabsContent value="tab3">Tab 3</TabsContent>
+        </Tabs>
       </div>
     </div>
   );
