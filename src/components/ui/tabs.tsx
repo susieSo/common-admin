@@ -85,7 +85,7 @@ const TabsTrigger = React.forwardRef<
       className={cn(tabsTriggerVariants({ size: finalSize }), className)}
       {...props}
     >
-      <span>{props.children}</span>
+      {props.children}
       {props.data && <span>{props.data}</span>}
     </TabsPrimitive.Trigger>
   );

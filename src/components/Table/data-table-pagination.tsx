@@ -36,7 +36,9 @@ export function DataTablePagination<TData>({
             disabled={currentPage - 1 < 1}
           />
         </PaginationItem>
-        {generatePaginationLinks(currentPage, totalPages, onPageChange)}
+        <div className="flex flex-row gap-1 mx-3">
+          {generatePaginationLinks(currentPage, totalPages, onPageChange)}
+        </div>
         <PaginationItem>
           <PaginationNext onClick={() => table.nextPage()} />
         </PaginationItem>
