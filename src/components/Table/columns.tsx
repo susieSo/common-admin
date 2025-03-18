@@ -39,7 +39,7 @@ export const columns: ColumnDef<Expense>[] = [
     //   <DataTableColumnHeader column={column} title="Label" />
     // ),
     cell: ({ row }) => (
-      <div className="w-[150px] capitalize">{row.getValue("label")}</div>
+      <div className="capitalize">{row.getValue("label")}</div>
     ),
     enableSorting: false,
     enableHiding: false,
@@ -52,7 +52,7 @@ export const columns: ColumnDef<Expense>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium capitalize">
+          <span className="max-w-[30rem] truncate font-medium capitalize">
             {row.getValue("note")}
           </span>
         </div>
@@ -66,7 +66,7 @@ export const columns: ColumnDef<Expense>[] = [
     // ),
     cell: ({ row }) => {
       return (
-        <div className="flex w-[100px] items-center">
+        <div className="max-w-40 flex justify-center items-center">
           <span className="capitalize"> {row.getValue("category")}</span>
         </div>
       );
@@ -83,7 +83,7 @@ export const columns: ColumnDef<Expense>[] = [
     cell: ({ row }) => {
       const type = row.getValue("type");
       return (
-        <div className="flex w-[100px] items-center">
+        <div className="max-w-40 flex justify-center items-center">
           {type === "income" ? (
             <TrendingUp size={20} className="mr-2 text-green-500" />
           ) : (
@@ -105,7 +105,7 @@ export const columns: ColumnDef<Expense>[] = [
     cell: ({ row }) => {
       const type = row.getValue("type");
       return (
-        <div className="flex w-[100px] items-center">
+        <div className="max-w-40 flex justify-center items-center">
           <span
             className={cn(
               "capitalize",
@@ -135,7 +135,7 @@ export const columns: ColumnDef<Expense>[] = [
         year: "numeric",
       });
       return (
-        <div className="flex w-[100px] items-center">
+        <div className="max-w-32 flex justify-center items-center">
           <span className="capitalize">{formattedDate}</span>
         </div>
       );

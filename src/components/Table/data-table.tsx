@@ -41,16 +41,12 @@ export function DataTable<TData, TValue>({
     <div className="mb-4 py-4 bg-white rounded-xl">
       <DataTableToolbar table={table} />
       <Table>
-        <TableHeader className="text-black-600 bg-black-100">
+        <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead
-                    key={header.id}
-                    colSpan={header.colSpan}
-                    className="text-center"
-                  >
+                  <TableHead key={header.id} colSpan={header.colSpan}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -71,7 +67,7 @@ export function DataTable<TData, TValue>({
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="px-4 py-2 text-center">
+                  <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
@@ -79,10 +75,7 @@ export function DataTable<TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell
-                colSpan={columns.length}
-                className="h-full text-center"
-              >
+              <TableCell colSpan={columns.length} className="h-full">
                 검색 결과가 없습니다.
               </TableCell>
             </TableRow>

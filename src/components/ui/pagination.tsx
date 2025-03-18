@@ -40,18 +40,24 @@ PaginationItem.displayName = "PaginationItem";
 
 type PaginationLinkProps = {
   isActive?: boolean;
+  disabled?: boolean;
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">;
 
 const PaginationLink = ({
   className,
   isActive,
+  disabled = false,
   ...props
 }: PaginationLinkProps) => (
   <a
     aria-current={isActive ? "page" : undefined}
+    role="link"
+    aria-disabled={disabled}
     className={cn(
-      "flex items-center justify-center w-8 h-8 py-1 px-2 text-black-700 rounded-lg hover:bg-secondary-200",
+      "flex items-center justify-center w-8 h-8 py-1 px-2 text-sm text-black-700 rounded-lg hover:bg-secondary-200 cursor-pointer",
+      disabled && "cursor-not-allowed pointer-events-none",
+      isActive && "bg-black-900 text-white",
       className
     )}
     {...props}
