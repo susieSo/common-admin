@@ -2,14 +2,17 @@ import * as React from "react";
 import { MoreHorizontal } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { ButtonProps, buttonVariants } from "@/components/ui/button";
+import { ButtonProps } from "@/components/ui/button";
 import { Icon } from "../Common/Icon";
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
     role="navigation"
     aria-label="pagination"
-    className={cn("mx-auto flex w-full h-8 justify-center", className)}
+    className={cn(
+      "mx-auto mt-4 mb-8 flex w-full h-8 justify-center",
+      className
+    )}
     {...props}
   />
 );
@@ -84,6 +87,34 @@ const PaginationNext = ({
 );
 PaginationNext.displayName = "PaginationNext";
 
+const PaginationFirst = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to first page"
+    className={cn("hover:bg-transparent", className)}
+    {...props}
+  >
+    <Icon iconType="arrowFirst" size="m" />
+  </PaginationLink>
+);
+PaginationFirst.displayName = "PaginationFirst";
+
+const PaginationLast = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to last page"
+    className={cn("hover:bg-transparent", className)}
+    {...props}
+  >
+    <Icon iconType="arrowLast" size="m" />
+  </PaginationLink>
+);
+PaginationLast.displayName = "PaginationLast";
+
 const PaginationEllipsis = ({
   className,
   ...props
@@ -107,4 +138,6 @@ export {
   PaginationPrevious,
   PaginationNext,
   PaginationEllipsis,
+  PaginationFirst,
+  PaginationLast,
 };

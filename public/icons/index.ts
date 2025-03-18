@@ -31,3 +31,5 @@ export { default as icChevronLeft } from "./ic-chevron-left.svg";
 export { default as icChevronRight } from "./ic-chevron-right.svg";
 export { default as icArrowFillDown } from "./ic-arrow-fill-down.svg";
 export { default as icArrowFillUp } from "./ic-arrow-fill-up.svg";
+export { default as icArrowFirst } from "./ic-arrow-first.svg";
+export { default as icArrowLast } from "./ic-arrow-last.svg";

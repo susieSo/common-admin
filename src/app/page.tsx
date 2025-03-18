@@ -32,7 +32,6 @@ import { z } from "zod";
 import { ko } from "date-fns/locale";
 import { Stepper } from "@/components/ui/stepper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TablePagination } from "@/components/Pagination";
 
 interface DummyDataProps {
   options: { value: string; label: string }[];
@@ -454,11 +453,6 @@ export default function Home() {
             <TabsContent value="tab3">Tab 3</TabsContent>
           </Tabs>
         </div>
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <H2>Pagination</H2>
-        <TablePagination />
       </div>
     </div>
   );

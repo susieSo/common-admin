@@ -5,7 +5,7 @@ export function ContentLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="container">
       <HeaderLayout />
-      <div className="px-14 m-auto">{children}</div>
+      <div className="px-14 pb-4 m-auto">{children}</div>
     </div>
   );
 }

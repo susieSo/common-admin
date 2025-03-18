@@ -43,6 +43,8 @@ export const IconTypes = {
   chevronRight: Icons.icChevronRight,
   arrowFillDown: Icons.icArrowFillDown,
   arrowFillUp: Icons.icArrowFillUp,
+  arrowFirst: Icons.icArrowFirst,
+  arrowLast: Icons.icArrowLast,
 } as const;
 
 type IconTypes = keyof typeof IconTypes;

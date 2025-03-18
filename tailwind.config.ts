@@ -67,7 +67,7 @@ export default {
         border: "#e6e6e6",
         input: {
           DEFAULT: "#DADEE1",
-          background: "#fafafa",
+          background: "#ffffff",
         },
         ring: "#0a0a0a",
         states: {

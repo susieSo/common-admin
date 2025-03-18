@@ -82,13 +82,17 @@ export function SearchBar() {
               render={({ field }) => (
                 <FormItem className="flex-1 w-full">
                   <FormControl>
-                    <Input placeholder="검색어를 입력해주세요." {...field} />
+                    <Input
+                      size="md"
+                      placeholder="검색어를 입력해주세요."
+                      {...field}
+                    />
                   </FormControl>
                 </FormItem>
               )}
             />
             <div className="flex gap-1 items-center">
-              <Button type="submit" variant="secondary" size="md">
+              <Button type="submit" size="md">
                 검색 <Icon iconType="search" size="s" fill="white" />
               </Button>
               <Button variant="secondary" size="md">

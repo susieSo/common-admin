@@ -9,7 +9,7 @@ const inputVariants = cva(
     variants: {
       size: {
         xl: "px-4 py-[0.938rem] text-base",
-        md: "px-3 py-2 text-sm",
+        md: "h-10 px-3 py-2.5 text-sm",
       },
       error: {
         true: "border-states-red focus-visible:border-states-red",
