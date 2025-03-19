@@ -2,7 +2,6 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Expense } from "./schema";
-// import { DataTableColumnHeader } from "./data-table-column-header";
 // import { DataTableRowActions } from "./data-table-row-actions";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -35,9 +34,6 @@ export const columns: ColumnDef<Expense>[] = [
   },
   {
     accessorKey: "label",
-    // header: ({ column }) => (
-    //   <DataTableColumnHeader column={column} title="Label" />
-    // ),
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("label")}</div>
     ),
@@ -46,9 +42,6 @@ export const columns: ColumnDef<Expense>[] = [
   },
   {
     accessorKey: "note",
-    // header: ({ column }) => (
-    //   <DataTableColumnHeader column={column} title="Note" />
-    // ),
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
@@ -61,9 +54,6 @@ export const columns: ColumnDef<Expense>[] = [
   },
   {
     accessorKey: "category",
-    // header: ({ column }) => (
-    //   <DataTableColumnHeader column={column} title="Category" />
-    // ),
     cell: ({ row }) => {
       return (
         <div className="max-w-40 flex justify-center items-center">
@@ -77,9 +67,6 @@ export const columns: ColumnDef<Expense>[] = [
   },
   {
     accessorKey: "type",
-    // header: ({ column }) => (
-    //   <DataTableColumnHeader column={column} title="Type" />
-    // ),
     cell: ({ row }) => {
       const type = row.getValue("type");
       return (
@@ -99,9 +86,6 @@ export const columns: ColumnDef<Expense>[] = [
   },
   {
     accessorKey: "amount",
-    // header: ({ column }) => (
-    //   <DataTableColumnHeader column={column} title="Amount" />
-    // ),
     cell: ({ row }) => {
       const type = row.getValue("type");
       return (
@@ -124,9 +108,6 @@ export const columns: ColumnDef<Expense>[] = [
   },
   {
     accessorKey: "date",
-    // header: ({ column }) => (
-    //   <DataTableColumnHeader column={column} title="Date" />
-    // ),
     cell: ({ row }) => {
       const date = new Date(row.getValue("date"));
       const formattedDate = date.toLocaleDateString("en-US", {

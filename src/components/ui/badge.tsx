@@ -33,4 +33,70 @@ function Badge({ className, variant, ...props }: BadgeProps) {
   );
 }
 
-export { Badge, badgeVariants };
+interface BaseBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+  isActive?: boolean;
+}
+
+const filterBadgeVariants = cva(
+  "px-4 py-1 h-7 text-sm inline-flex items-center rounded-full",
+  {
+    variants: {
+      state: {
+        on: "bg-primary-cyan text-white",
+        off: "bg-white text-secondary-700 border border-secondary-200",
+      },
+    },
+    defaultVariants: {
+      state: "off",
+    },
+  }
+);
+
+export interface FilterBadgeProps
+  extends BaseBadgeProps,
+    VariantProps<typeof filterBadgeVariants> {}
+
+function FilterBadge({ className, isActive, ...props }: FilterBadgeProps) {
+  return (
+    <div
+      className={cn(
+        filterBadgeVariants({ state: isActive ? "on" : "off" }),
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+const answerBadgeVariants = cva(
+  "px-3 py-2 h-[1.875rem] text-sm inline-flex items-center border rounded-full",
+  {
+    variants: {
+      state: {
+        on: "bg-[#E5FAED] border-[#AEEFC6] text-[#28D366]",
+        off: "bg-black-00 border-black-100 text-black-300",
+      },
+    },
+    defaultVariants: {
+      state: "off",
+    },
+  }
+);
+
+export interface AnswerBadgeProps
+  extends BaseBadgeProps,
+    VariantProps<typeof answerBadgeVariants> {}
+
+function AnswerBadge({ className, isActive, ...props }: AnswerBadgeProps) {
+  return (
+    <div
+      className={cn(
+        answerBadgeVariants({ state: isActive ? "on" : "off" }),
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+export { Badge, badgeVariants, FilterBadge, AnswerBadge };

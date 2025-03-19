@@ -32,6 +32,7 @@ import { z } from "zod";
 import { ko } from "date-fns/locale";
 import { Stepper } from "@/components/ui/stepper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AnswerBadge, FilterBadge } from "@/components/ui/badge";
 
 interface DummyDataProps {
   options: { value: string; label: string }[];
@@ -452,6 +453,16 @@ export default function Home() {
             <TabsContent value="tab2">Tab 2</TabsContent>
             <TabsContent value="tab3">Tab 3</TabsContent>
           </Tabs>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <H2>Badge</H2>
+        <div className="flex gap-4 items-end">
+          <FilterBadge>옵션명</FilterBadge>
+          <FilterBadge isActive>옵션명</FilterBadge>
+          <AnswerBadge>미답변</AnswerBadge>
+          <AnswerBadge isActive>답변완료</AnswerBadge>
         </div>
       </div>
     </div>
