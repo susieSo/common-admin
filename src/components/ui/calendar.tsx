@@ -18,7 +18,7 @@ function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn("w-80 pt-8 pb-6 px-6", className)}
+      className={cn("w-full pt-8 pb-6 px-6", className)}
       classNames={{
         months:
           "w-full flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
@@ -31,7 +31,7 @@ function Calendar({
         nav_button_next: "absolute right-1",
         table: "w-full border-collapse mt-4",
         head_row: "flex items-center mb-2",
-        head_cell: "text-black-900 w-10 font-normal text-xs",
+        head_cell: "w-10 font-normal text-xs",
         row: "flex w-full mt-1",
         cell: cn(
           "relative p-0 text-center text-sm text-white focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-primary-cyanDark [&:has([aria-selected].day-outside)]:bg-primary-cyanDark [&:has([aria-selected].day-range-end)]:rounded-full [&:has([aria-selected].day-range-start)]:rounded-full",
@@ -48,16 +48,15 @@ function Calendar({
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",
         day_selected: cn(
-          "bg-primary text-white hover:bg-primary-cyanDark hover:text-white focus:bg-primary-cyanDark focus:text-white rounded-full",
+          "text-white hover:bg-primary-cyanDark hover:text-white focus:bg-primary-cyanDark focus:text-white rounded-full",
           props.mode === "range" &&
-            "rounded-none [&:has([aria-selected])]:rounded-full hover:rounded-none hover:bg-transparent"
+            "[&:has([aria-selected])]:rounded-full hover:rounded-full hover:bg-transparent"
         ),
-        day_today: "bg-secondary-100 text-black-900 rounded-full",
-        day_outside:
-          "day-outside text-muted-foreground aria-selected:bg-accent/50 aria-selected:text-muted-foreground",
+        day_today: "bg-secondary-100 rounded-full",
+        day_outside: "day-outside text-black-400 opacity-50",
         day_disabled: "text-muted-foreground opacity-50",
         day_range_middle:
-          "aria-selected:bg-primary-cyanLight aria-selected:text-primary-cyanDark",
+          "aria-selected:rounded-none aria-selected:bg-primary-cyanLight aria-selected:text-primary-cyanDark",
         day_hidden: "invisible",
         ...classNames,
       }}

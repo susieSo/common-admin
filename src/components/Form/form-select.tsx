@@ -5,7 +5,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { SelectHTMLAttributes } from "react";
+import React, { SelectHTMLAttributes } from "react";
 import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 import {
   Select,
@@ -50,13 +50,22 @@ export const FormSelect = <T extends FieldValues, U>({
           return (
             <FormItem className={className}>
               {label && <FormLabel>{label}</FormLabel>}
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                onValueChange={(value) => {
+                  field.onChange(value === "__CLEAR__" ? undefined : value);
+                }}
+                value={field.value}
+              >
                 <FormControl>
                   <SelectTrigger size={size} error={!!error}>
-                    <SelectValue placeholder={placeholder} />
+                    <SelectValue
+                      placeholder={placeholder}
+                      onSelect={() => field.onChange(undefined)}
+                    />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
+                  <SelectItem value="__CLEAR__">선택 해제</SelectItem>
                   {options.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}

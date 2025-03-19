@@ -77,6 +77,7 @@ export const FormInput = <T extends FieldValues, U>({
                         type={actionButton.type || "button"}
                         variant={actionButton.variant || "ghost"}
                         onClick={actionButton.onClick}
+                        className="w-14"
                       >
                         <Icon iconType={actionButton.icon} size="sm" />
                       </Button>

@@ -33,6 +33,7 @@ import { ko } from "date-fns/locale";
 import { Stepper } from "@/components/ui/stepper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnswerBadge, FilterBadge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
 interface DummyDataProps {
   options: { value: string; label: string }[];
@@ -111,9 +112,9 @@ export default function Home() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   console.log(values);
+  // }
 
   useEffect(() => {
     fetch("api/dummy")
@@ -159,7 +160,7 @@ export default function Home() {
         <H2>Form</H2>
         <Form {...form}>
           <form
-            onChange={form.handleSubmit(onSubmit)}
+            // onChange={form.handleSubmit(onSubmit)}
             className="flex gap-4 flex-wrap flex-col"
           >
             <FormInput
@@ -335,9 +336,7 @@ export default function Home() {
                             mode="single"
                             selected={field.value}
                             onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
+                            disabled={(date) => date < new Date("1900-01-01")}
                             initialFocus
                           />
                         </PopoverContent>
@@ -396,12 +395,12 @@ export default function Home() {
                           <Calendar
                             locale={ko}
                             mode="range"
+                            defaultMonth={field.value?.from}
                             selected={field.value}
                             onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
+                            disabled={(date) => date < new Date("1900-01-01")}
                             initialFocus
+                            numberOfMonths={2}
                           />
                         </PopoverContent>
                       </Popover>
@@ -463,6 +462,26 @@ export default function Home() {
           <FilterBadge isActive>옵션명</FilterBadge>
           <AnswerBadge>미답변</AnswerBadge>
           <AnswerBadge isActive>답변완료</AnswerBadge>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <H2>Toast</H2>
+        <div className="flex gap-4 items-end">
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast("Event has been created", {
+                description: "Sunday, December 03, 2023 at 9:00 AM",
+                action: {
+                  label: "Undo",
+                  onClick: () => console.log("Undo"),
+                },
+              })
+            }
+          >
+            Show Toast
+          </Button>
         </div>
       </div>
     </div>

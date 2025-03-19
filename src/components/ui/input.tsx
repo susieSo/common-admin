@@ -15,7 +15,7 @@ const inputVariants = cva(
         true: "border-states-red focus-visible:border-states-red",
       },
       hasIcon: {
-        true: "px-[4.938rem]",
+        true: "pl-12 pr-16",
       },
     },
     defaultVariants: {
