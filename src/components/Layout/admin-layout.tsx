@@ -12,7 +12,7 @@ export default function AdminLayout({
   return (
     <SidebarProvider>
       <MenuSidebar />
-      <main className="relative w-full h-screen bg-bg-page">
+      <main className="relative w-full h-full bg-bg-page">
         <SidebarTrigger />
         <ContentLayout>{children}</ContentLayout>
       </main>

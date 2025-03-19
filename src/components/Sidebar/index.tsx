@@ -11,17 +11,15 @@ import { Menu } from "./menu";
 
 export function MenuSidebar() {
   return (
-    <>
-      <Sidebar variant="floating">
-        <SidebarHeader>
-          <Link href="/">
-            <Image src={logo} alt="logo" width={120} height={19} />
-          </Link>
-        </SidebarHeader>
-        <SidebarContent>
-          <Menu />
-        </SidebarContent>
-      </Sidebar>
-    </>
+    <Sidebar>
+      <SidebarHeader>
+        <Link href="/">
+          <Image src={logo} alt="logo" width={120} height={19} />
+        </Link>
+      </SidebarHeader>
+      <SidebarContent>
+        <Menu />
+      </SidebarContent>
+    </Sidebar>
   );
 }
