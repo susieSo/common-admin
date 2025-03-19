@@ -2,10 +2,9 @@ import { Title } from "@/components/Layout/title";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/Common/Icon";
 import { SearchBar } from "@/components/SearchBar";
-import { DataTable } from "@/components/Table/data-table";
 import path from "path";
 import fs from "fs";
-import { columns } from "@/components/Table/columns";
+import { DataTableContainer } from "@/app/app/splash/(container)/DataTableContainer";
 
 async function getData() {
   const filePath = path.join(process.cwd(), "src", "data", "tableData.json");
@@ -25,7 +24,7 @@ export default async function SplashScreen() {
         </Button>
       </div>
       <SearchBar />
-      <DataTable columns={columns} data={data} />
+      <DataTableContainer data={data} />
     </>
   );
 }
