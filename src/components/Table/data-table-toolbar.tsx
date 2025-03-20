@@ -31,7 +31,11 @@ export function DataTableToolbar<TData>({
         <Button size="md" className="mr-4">
           계정권한관리 <Icon iconType="setting" size="s" fill="white" />
         </Button>
-        <Select>
+        <Select
+          onValueChange={(value) => {
+            table.setSorting([{ id: "date", desc: value === "descending" }]);
+          }}
+        >
           <SelectTrigger className="w-40 mr-1">
             <SelectValue placeholder="최근등록일순" />
           </SelectTrigger>
