@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <body>
         <AdminLayout>{children}</AdminLayout>
-        <Toaster position="bottom-center" />
+        <Toaster />
       </body>
     </html>
   );

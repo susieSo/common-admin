@@ -33,7 +33,7 @@ import { ko } from "date-fns/locale";
 import { Stepper } from "@/components/ui/stepper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnswerBadge, FilterBadge } from "@/components/ui/badge";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 
 interface DummyDataProps {
   options: { value: string; label: string }[];
@@ -115,6 +115,8 @@ export default function Home() {
   // function onSubmit(values: z.infer<typeof formSchema>) {
   //   console.log(values);
   // }
+
+  const { addToast } = useToast();
 
   useEffect(() => {
     fetch("api/dummy")
@@ -471,16 +473,57 @@ export default function Home() {
           <Button
             variant="outline"
             onClick={() =>
-              toast("Event has been created", {
-                description: "Sunday, December 03, 2023 at 9:00 AM",
-                action: {
-                  label: "Undo",
-                  onClick: () => console.log("Undo"),
-                },
+              addToast({
+                message: "Event has been created",
+                type: "primary",
               })
             }
           >
-            Show Toast
+            Show Primary Toast
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              addToast({
+                message: "Event has been created",
+                type: "success",
+              })
+            }
+          >
+            Show Success Toast
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              addToast({
+                message: "Event has been created",
+                type: "info",
+              })
+            }
+          >
+            Show Info Toast
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              addToast({
+                message: "Event has been created",
+                type: "warning",
+              })
+            }
+          >
+            Show Warning Toast
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              addToast({
+                message: "Event has been created",
+                type: "error",
+              })
+            }
+          >
+            Show Error Toast
           </Button>
         </div>
       </div>

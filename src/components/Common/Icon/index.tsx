@@ -45,6 +45,11 @@ export const IconTypes = {
   arrowFillUp: Icons.icArrowFillUp,
   arrowFirst: Icons.icArrowFirst,
   arrowLast: Icons.icArrowLast,
+  toastPrimary: Icons.icToastPrimary,
+  toastSuccess: Icons.icToastSuccess,
+  toastInfo: Icons.icToastInfo,
+  toastWarning: Icons.icToastWarning,
+  toastError: Icons.icToastError,
 } as const;
 
 type IconTypes = keyof typeof IconTypes;

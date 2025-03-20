@@ -33,3 +33,8 @@ export { default as icArrowFillDown } from "./ic-arrow-fill-down.svg";
 export { default as icArrowFillUp } from "./ic-arrow-fill-up.svg";
 export { default as icArrowFirst } from "./ic-arrow-first.svg";
 export { default as icArrowLast } from "./ic-arrow-last.svg";
+export { default as icToastPrimary } from "./ic-toast-primary.svg";
+export { default as icToastSuccess } from "./ic-toast-success.svg";
+export { default as icToastInfo } from "./ic-toast-info.svg";
+export { default as icToastWarning } from "./ic-toast-warning.svg";
+export { default as icToastError } from "./ic-toast-error.svg";
