@@ -1,13 +1,14 @@
 import { z } from "zod";
 
-export const expenseSchema = z.object({
+export const tableSchema = z.object({
   id: z.string(),
-  label: z.string(),
-  note: z.string(),
-  category: z.string(),
-  type: z.enum(["income", "expense"]),
+  name: z.string(),
+  email: z.string(),
+  department: z.enum(["Finance", "HR", "IT", "Marketing"]),
+  authority: z.enum(["Administrator", "Manager"]),
+  type: z.enum(["Income", "Expense"]),
   amount: z.number(),
   date: z.string(),
 });
 
-export type Expense = z.infer<typeof expenseSchema>;
+export type Expense = z.infer<typeof tableSchema>;

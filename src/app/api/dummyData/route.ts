@@ -1,10 +1,10 @@
+import { NextResponse } from "next/server";
 import {
   CHECKBOX_ITEMS,
   MULTIPLE_SELECT_OPTIONS,
   RADIO_ITEMS,
   SELECT_OPTIONS,
 } from "@/data/dummyData";
-import { NextResponse } from "next/server";
 
 export async function GET() {
   return NextResponse.json({

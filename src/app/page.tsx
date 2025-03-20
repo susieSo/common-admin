@@ -119,10 +119,10 @@ export default function Home() {
   const { addToast } = useToast();
 
   useEffect(() => {
-    fetch("api/dummy")
+    fetch("api/dummyData")
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.data);
+        console.log(data.data);
         setDummyData(data.data);
       })
       .catch((error) => {

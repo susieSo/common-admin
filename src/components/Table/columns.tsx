@@ -1,13 +1,13 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Expense } from "./schema";
+import { tableSchema } from "./schema";
 // import { DataTableRowActions } from "./data-table-row-actions";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export const columns: ColumnDef<Expense>[] = [
+export const columns: ColumnDef<typeof tableSchema>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -33,33 +33,44 @@ export const columns: ColumnDef<Expense>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "label",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("label")}</div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    accessorKey: "name",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
-    accessorKey: "note",
+    accessorKey: "email",
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[30rem] truncate font-medium capitalize">
-            {row.getValue("note")}
+          <span className="max-w-[30rem] truncate font-medium">
+            {row.getValue("email")}
           </span>
         </div>
       );
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
-    accessorKey: "category",
+    accessorKey: "department",
     cell: ({ row }) => {
       return (
         <div className="max-w-40 flex justify-center items-center">
-          <span className="capitalize"> {row.getValue("category")}</span>
+          <span className="capitalize"> {row.getValue("department")}</span>
         </div>
       );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: "authority",
+    cell: ({ row }) => {
+      return <div className="capitalize">{row.getValue("authority")}</div>;
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
@@ -71,7 +82,7 @@ export const columns: ColumnDef<Expense>[] = [
       const type = row.getValue("type");
       return (
         <div className="max-w-40 flex justify-center items-center">
-          {type === "income" ? (
+          {type === "Income" ? (
             <TrendingUp size={20} className="mr-2 text-green-500" />
           ) : (
             <TrendingDown size={20} className="mr-2 text-red-500" />
@@ -110,7 +121,7 @@ export const columns: ColumnDef<Expense>[] = [
     accessorKey: "date",
     cell: ({ row }) => {
       const date = new Date(row.getValue("date"));
-      const formattedDate = date.toLocaleDateString("en-US", {
+      const formattedDate = date.toLocaleDateString("ko-KR", {
         day: "2-digit",
         month: "short",
         year: "numeric",
@@ -127,8 +138,8 @@ export const columns: ColumnDef<Expense>[] = [
       return rowDate >= startDate && rowDate <= endDate;
     },
   },
-  {
-    id: "actions",
-    // cell: ({ row }) => <DataTableRowActions row={row} />,
-  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  // },
 ];
