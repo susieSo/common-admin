@@ -7,19 +7,27 @@ import { SearchBar } from "@/components/SearchBar";
 import { DataTable } from "@/components/Table/data-table";
 import { columns } from "@/components/Table/columns";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function SplashScreen() {
+  const search = useSearchParams();
+  const searchQuery = search ? search.get("q") : null;
+  const encodedSearchQuery = encodeURI(searchQuery || "");
+
   const [data, setData] = useState([]);
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`/api/tableData?${encodedSearchQuery}`);
+      const data = await response.json();
+      setData(data.tableData);
+    } catch (error) {
+      console.error("Failed to fetch table data:", error);
+    }
+  };
+
   useEffect(() => {
-    fetch("/api/tableData")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data.tableData);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch table data:", error);
-      });
+    fetchData();
   }, []);
 
   return (

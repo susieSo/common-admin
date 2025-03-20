@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const tableSchema = z.object({
+export const expenseSchema = z.object({
   id: z.string(),
   name: z.string(),
   email: z.string(),
@@ -11,4 +11,4 @@ export const tableSchema = z.object({
   date: z.string(),
 });
 
-export type Expense = z.infer<typeof tableSchema>;
+export type Expense = z.infer<typeof expenseSchema>;

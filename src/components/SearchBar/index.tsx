@@ -3,13 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import {
   Select,
   SelectItem,
@@ -18,9 +12,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { Icon } from "../Common/Icon";
+import { useRouter } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 const searchFormSchema = z.object({
   searchKeyword: z.string({ required_error: "검색어 키워드를 선택해주세요" }),
@@ -28,25 +23,33 @@ const searchFormSchema = z.object({
     .string()
     .min(2, { message: "검색어를 2글자 이상 입력해주세요." })
     .max(30, { message: "검색어를 30글자 이내로 입력해주세요." }),
-  authorityType: z.enum(["all", "top", "general"]),
 });
 
 type SearchFormValues = z.infer<typeof searchFormSchema>;
 
 export function SearchBar() {
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
   const form = useForm<SearchFormValues>({
     resolver: zodResolver(searchFormSchema),
     mode: "onChange",
   });
 
-  function onSubmit(data: SearchFormValues) {
-    console.log(data);
-  }
+  const onSearch = (data: SearchFormValues) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("searchKeyword", data.searchKeyword);
+    params.set("searchTerm", data.searchTerm);
+
+    replace(`${pathname}?${params.toString()}`);
+  };
+
   return (
     <div className="mb-4 py-6 px-10 bg-white rounded-xl">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSearch)}
           className="flex gap-4 flex-col"
         >
           <div className="flex gap-2 items-center h-[50px]">
@@ -85,6 +88,7 @@ export function SearchBar() {
                     <Input
                       size="md"
                       placeholder="검색어를 입력해주세요."
+                      error={!!form.formState.errors.searchTerm}
                       {...field}
                     />
                   </FormControl>
@@ -99,49 +103,6 @@ export function SearchBar() {
                 <Icon iconType="refresh" size="s" fill="white" />
               </Button>
             </div>
-          </div>
-          <div className="flex gap-2 items-center h-[]">
-            <div className="w-28">
-              <p className="font-bold">권한</p>
-            </div>
-            <FormField
-              control={form.control}
-              name="authorityType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <RadioGroup
-                      onChange={field.onChange}
-                      defaultValue={field.value}
-                      className="flex gap-6"
-                    >
-                      <FormItem className="flex items-center space-x-1.5 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="all" />
-                        </FormControl>
-                        <FormLabel className="text-black-700">전체</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-1.5 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="top" />
-                        </FormControl>
-                        <FormLabel className="text-black-700">
-                          최고관리자
-                        </FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-1.5 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="general" />
-                        </FormControl>
-                        <FormLabel className="text-black-700">
-                          일반관리자
-                        </FormLabel>
-                      </FormItem>
-                    </RadioGroup>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
           </div>
         </form>
       </Form>
