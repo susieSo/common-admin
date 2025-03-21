@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Icon } from "../Common/Icon";
 import { useRouter } from "next/navigation";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const searchFormSchema = z.object({
   searchKeyword: z.string({ required_error: "검색어 키워드를 선택해주세요" }),
@@ -27,22 +27,39 @@ const searchFormSchema = z.object({
 
 type SearchFormValues = z.infer<typeof searchFormSchema>;
 
-export function SearchBar() {
+export function SearchBar({
+  initialKeyword,
+  initialTerm,
+}: {
+  initialKeyword: string;
+  initialTerm: string;
+}) {
   const { replace } = useRouter();
-  const searchParams = useSearchParams();
   const pathname = usePathname();
 
   const form = useForm<SearchFormValues>({
     resolver: zodResolver(searchFormSchema),
     mode: "onChange",
+    defaultValues: {
+      searchKeyword: initialKeyword,
+      searchTerm: initialTerm,
+    },
   });
 
   const onSearch = (data: SearchFormValues) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams();
     params.set("searchKeyword", data.searchKeyword);
     params.set("searchTerm", data.searchTerm);
 
     replace(`${pathname}?${params.toString()}`);
+  };
+
+  const onReset = () => {
+    form.reset({
+      searchKeyword: "name",
+      searchTerm: "",
+    });
+    replace(`${pathname}`);
   };
 
   return (
@@ -61,10 +78,7 @@ export function SearchBar() {
               name="searchKeyword"
               render={({ field }) => (
                 <FormItem>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="flex-1 w-40">
                         <SelectValue placeholder="이름" />
@@ -99,7 +113,7 @@ export function SearchBar() {
               <Button type="submit" size="md">
                 검색 <Icon iconType="search" size="s" fill="white" />
               </Button>
-              <Button variant="secondary" size="md">
+              <Button variant="secondary" size="md" onClick={onReset}>
                 <Icon iconType="refresh" size="s" fill="white" />
               </Button>
             </div>
