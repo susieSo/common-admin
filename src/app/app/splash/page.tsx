@@ -15,11 +15,14 @@ export default function SplashScreen() {
   const searchTerm = search ? search.get("searchTerm") : null;
 
   const [data, setData] = useState<Expense[]>([]);
-  const [filteredData, setFilteredData] = useState<Expense[]>([]);
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`/api/tableData`);
+      const params = new URLSearchParams();
+      params.set("searchKeyword", searchKeyword || "name");
+      params.set("searchTerm", searchTerm || "");
+
+      const response = await fetch(`/api/tableData?${params.toString()}`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch table data");
@@ -27,34 +30,14 @@ export default function SplashScreen() {
 
       const data = await response.json();
       setData(data.tableData);
-      filterData(data.tableData);
     } catch (error) {
       console.error("Failed to fetch table data:", error);
     }
   };
 
-  const filterData = (data: Expense[]) => {
-    if (!searchKeyword || !searchTerm) {
-      setFilteredData(data);
-      return;
-    }
-
-    const filtered = data.filter((item) => {
-      const term = searchTerm.toLowerCase();
-      const value = String(item[searchKeyword as keyof Expense]).toLowerCase();
-      return value.includes(term);
-    });
-
-    setFilteredData(filtered);
-  };
-
   useEffect(() => {
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    filterData(data);
-  }, [searchKeyword, searchTerm]);
+  }, [search]);
 
   return (
     <>
@@ -68,8 +51,8 @@ export default function SplashScreen() {
         initialKeyword={searchKeyword || "name"}
         initialTerm={searchTerm || ""}
       />
-      {filteredData.length > 0 ? (
-        <DataTableContainer data={filteredData} />
+      {data.length > 0 ? (
+        <DataTableContainer data={data} />
       ) : (
         <div className="w-full h-full p-6 flex justify-center items-center bg-white rounded-xl">
           <p className="text-base text-gray-500">검색 결과가 없습니다.</p>

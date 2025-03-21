@@ -43,6 +43,7 @@
     "react-uuid": "^2.0.0",
     "scss": "^0.2.4",
     "sonner": "^2.0.1",
+    "swr": "^2.3.3",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-preset-px-to-rem": "^1.2.1",
