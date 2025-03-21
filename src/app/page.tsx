@@ -34,7 +34,7 @@ import { Stepper } from "@/components/ui/stepper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnswerBadge, FilterBadge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-
+import { AlertPopup } from "@/components/Popup/alert-popup";
 interface DummyDataProps {
   options: { value: string; label: string }[];
   multipleOptions: { label: string; value: string; disable?: boolean }[];
@@ -525,6 +525,25 @@ export default function Home() {
           >
             Show Error Toast
           </Button>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <H2>Popup</H2>
+        <div className="flex gap-4 items-end">
+          <AlertPopup
+            buttonText="show Popup"
+            title={`제목을 입력하세요.\n타이틀은 최대 2줄입니다.`}
+            description={`내용을 입력하세요. \n최적은 2줄까지입니다. 참고하세요. `}
+            className="w-40"
+            isCancel
+          />
+          <AlertPopup
+            buttonText="show Popup"
+            title={`제목을 입력하세요.\n타이틀은 최대 2줄입니다.`}
+            description={`내용을 입력하세요. \n최적은 2줄까지입니다. 참고하세요. `}
+            className="w-40"
+          />
         </div>
       </div>
     </div>
