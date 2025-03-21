@@ -4,32 +4,21 @@ import { Title } from "@/components/Layout/title";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/Common/Icon";
 import { SearchBar } from "@/components/SearchBar";
-import { DataTable } from "@/components/Table/data-table";
-import { columns } from "@/components/Table/columns";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Expense } from "@/components/Table/schema";
+import { DataTableContainer } from "./(container)/DataTableContainer";
 
 export default function SplashScreen() {
   const search = useSearchParams();
   const searchKeyword = search ? search.get("searchKeyword") : null;
   const searchTerm = search ? search.get("searchTerm") : null;
 
-  // const buildSearchQuery = () => {
-  //   const params = new URLSearchParams();
-  //   if (searchKeyword && searchTerm) {
-  //     params.set("searchKeyword", searchKeyword);
-  //     params.set("searchTerm", searchTerm);
-  //   }
-  //   return params.toString();
-  // };
-
   const [data, setData] = useState<Expense[]>([]);
   const [filteredData, setFilteredData] = useState<Expense[]>([]);
 
   const fetchData = async () => {
     try {
-      // const query = buildSearchQuery();
       const response = await fetch(`/api/tableData`);
 
       if (!response.ok) {
@@ -80,10 +69,10 @@ export default function SplashScreen() {
         initialTerm={searchTerm || ""}
       />
       {filteredData.length > 0 ? (
-        <DataTable columns={columns} data={filteredData} />
+        <DataTableContainer data={filteredData} />
       ) : (
         <div className="w-full h-full p-6 flex justify-center items-center bg-white rounded-xl">
-          <p className="text-sm text-gray-500">검색 결과가 없습니다.</p>
+          <p className="text-base text-gray-500">검색 결과가 없습니다.</p>
         </div>
       )}
     </>

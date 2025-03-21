@@ -2,10 +2,13 @@
 import * as React from "react";
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
+  OnChangeFn,
   useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -23,11 +26,15 @@ import { DataTableToolbar } from "./data-table-toolbar";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  columnFilters: ColumnFiltersState;
+  setColumnFilters: OnChangeFn<ColumnFiltersState>;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  columnFilters,
+  setColumnFilters,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -35,6 +42,11 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    state: {
+      columnFilters,
+    },
   });
 
   return (
