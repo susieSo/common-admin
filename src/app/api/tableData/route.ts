@@ -4,18 +4,20 @@ import { Expense } from "@/components/Table/schema";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const searchKeyword = url.searchParams.get("searchKeyword");
+  const searchKeyword = url.searchParams.get("searchKeyword") as keyof Omit<
+    Expense,
+    "id"
+  >;
   const searchTerm = url.searchParams.get("searchTerm");
 
   let filteredData = [...TABLE_DATA];
 
   if (searchKeyword && searchTerm) {
     filteredData = filteredData.filter((item) => {
-      const value = String(item[searchKeyword as keyof Expense]).toLowerCase();
+      const value = String(item[searchKeyword]).toLowerCase();
       return value.includes(searchTerm.toLowerCase());
     });
   }
-  console.log(filteredData);
 
   return NextResponse.json({
     tableData: filteredData,

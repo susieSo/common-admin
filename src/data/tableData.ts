@@ -1,14 +1,6 @@
-type TableData = {
-  name: string;
-  email: string;
-  department: "Finance" | "HR" | "IT" | "Marketing";
-  authority: "Administrator" | "Manager";
-  type: "Expense" | "Income";
-  amount: number;
-  date: string;
-};
+import { Expense } from "@/components/Table/schema";
 
-export const TABLE_DATA: TableData[] = [
+export const TABLE_DATA: Omit<Expense, "id">[] = [
   {
     name: "Kim Minseo",
     email: "minseo.kim@example.com",
