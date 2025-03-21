@@ -76,6 +76,7 @@ button {
     --sidebar-accent-foreground: theme("colors.sidebar.accent-foreground");
     --sidebar-border: theme("colors.sidebar.border");
     --sidebar-ring: theme("colors.sidebar.ring");
+    --header-height: 4.75rem;
   }
 }
 
