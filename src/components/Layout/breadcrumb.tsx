@@ -1,9 +1,9 @@
-import Link from "next/link";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Icon } from "../Common/Icon";
@@ -18,17 +18,15 @@ export function BreadCrumb({ current, parent }: BreadCrumbProps) {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href="/">
-              <Icon iconType="home" size="s" fill="#20325A" />
-            </Link>
+          <BreadcrumbLink href="/">
+            <Icon iconType="home" size="s" fill="#20325A" />
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <p>{current}</p>
-          </BreadcrumbLink>
+          <BreadcrumbPage className="text-secondary-400">
+            {current}
+          </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
@@ -36,23 +34,19 @@ export function BreadCrumb({ current, parent }: BreadCrumbProps) {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href="/">
-              <Icon iconType="home" size="s" fill="#20325A" />
-            </Link>
+          <BreadcrumbLink href="/">
+            <Icon iconType="home" size="s" fill="#20325A" />
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <p>{parent}</p>
-          </BreadcrumbLink>
+          <BreadcrumbPage>{parent}</BreadcrumbPage>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <p>{current}</p>
-          </BreadcrumbLink>
+          <BreadcrumbPage className="text-secondary-400">
+            {current}
+          </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

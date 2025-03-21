@@ -16,7 +16,7 @@ export function Menu() {
   const pathname = usePathname();
 
   return (
-    <SidebarMenu className="text-white">
+    <SidebarMenu>
       <Collapsible className="group/collapsible">
         {menuList.map(({ href, label, icon: Icon, active, submenus }, index) =>
           !submenus || submenus.length === 0 ? (
