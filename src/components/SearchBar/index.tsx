@@ -14,8 +14,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Icon } from "../Common/Icon";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
 
 const searchFormSchema = z.object({
   searchKeyword: z.string({ required_error: "검색어 키워드를 선택해주세요" }),
@@ -27,16 +25,17 @@ const searchFormSchema = z.object({
 
 type SearchFormValues = z.infer<typeof searchFormSchema>;
 
+interface SearchBarProps {
+  initialKeyword: string;
+  initialTerm: string;
+  onSearch: (keyword: string, term: string) => void;
+}
+
 export function SearchBar({
   initialKeyword,
   initialTerm,
-}: {
-  initialKeyword: string;
-  initialTerm: string;
-}) {
-  const { replace } = useRouter();
-  const pathname = usePathname();
-
+  onSearch,
+}: SearchBarProps) {
   const form = useForm<SearchFormValues>({
     resolver: zodResolver(searchFormSchema),
     mode: "onChange",
@@ -46,12 +45,8 @@ export function SearchBar({
     },
   });
 
-  const onSearch = (data: SearchFormValues) => {
-    const params = new URLSearchParams();
-    params.set("searchKeyword", data.searchKeyword);
-    params.set("searchTerm", data.searchTerm);
-
-    replace(`${pathname}?${params.toString()}`);
+  const handleSearch = (data: SearchFormValues) => {
+    onSearch(data.searchKeyword, data.searchTerm);
   };
 
   const onReset = () => {
@@ -59,14 +54,14 @@ export function SearchBar({
       searchKeyword: "name",
       searchTerm: "",
     });
-    replace(`${pathname}`);
+    onSearch("name", "");
   };
 
   return (
     <div className="mb-4 py-6 px-10 bg-white rounded-xl">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSearch)}
+          onSubmit={form.handleSubmit(handleSearch)}
           className="flex gap-4 flex-col"
         >
           <div className="flex gap-2 items-center h-[50px]">

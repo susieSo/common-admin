@@ -9,8 +9,8 @@ export default async function SplashScreen({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const params = await searchParams;
-  const searchKeyword = params.searchKeyword as string;
-  const searchTerm = params.searchTerm as string;
+  const searchKeyword = (params.searchKeyword || "name") as string;
+  const searchTerm = (params.searchTerm || "") as string;
 
   const data = await fetchTableData(searchKeyword, searchTerm);
 
