@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Expense } from "@/components/Table/schema";
 import { DataTableContainer } from "./(container)/DataTableContainer";
+import { useFetch } from "@/hooks/use-fetch";
+import { toast } from "sonner";
 
 export default function SplashScreen() {
   const search = useSearchParams();
@@ -15,36 +17,22 @@ export default function SplashScreen() {
   const searchTerm = search ? search.get("searchTerm") : null;
 
   const [data, setData] = useState<Expense[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  const fetchData = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const params = new URLSearchParams();
-      params.set("searchKeyword", searchKeyword || "name");
-      params.set("searchTerm", searchTerm || "");
-
-      const response = await fetch(`/api/tableData?${params.toString()}`);
-
-      if (!response.ok) {
-        throw new Error("검색 결과가 없습니다.");
-      }
-
-      const data = await response.json();
-      setData(data.tableData);
-    } catch (error) {
-      console.error("Failed to fetch table data:", error);
-      setError("검색 결과가 없습니다.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { loading, error, fetchInitialData } = useFetch({
+    callback: (data) => setData(data.tableData as Expense[]),
+    url:
+      searchKeyword && searchTerm
+        ? `/api/tableData?searchKeyword=${searchKeyword}&searchTerm=${searchTerm}`
+        : "/api/tableData",
+  });
 
   useEffect(() => {
-    fetchData();
+    fetchInitialData();
   }, [search]);
+
+  if (error) {
+    toast.error("Failed to fetch table data");
+  }
 
   return (
     <>
@@ -58,7 +46,7 @@ export default function SplashScreen() {
         initialKeyword={searchKeyword || "name"}
         initialTerm={searchTerm || ""}
       />
-      <DataTableContainer data={data} loading={loading} error={error} />
+      <DataTableContainer data={data} loading={loading} />
     </>
   );
 }

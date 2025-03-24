@@ -9,13 +9,11 @@ import { useState } from "react";
 interface DataTableContainerProps {
   data: Expense[];
   loading: boolean;
-  error: string | null;
 }
 
 export const DataTableContainer = ({
   data,
   loading,
-  error,
 }: DataTableContainerProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   return (
@@ -25,7 +23,6 @@ export const DataTableContainer = ({
       columnFilters={columnFilters}
       setColumnFilters={setColumnFilters}
       loading={loading}
-      error={error}
     />
   );
 };
