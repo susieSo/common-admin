@@ -1,8 +1,8 @@
 "use client";
 
-import { columns } from "@/components/Table/columns";
+import { columns } from "./tableColumns";
+import { Expense } from "./tableSchema";
 import { DataTable } from "@/components/Table/data-table";
-import { Expense } from "@/components/Table/schema";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { useState } from "react";
 

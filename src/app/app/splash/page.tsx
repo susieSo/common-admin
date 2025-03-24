@@ -6,8 +6,8 @@ import { Icon } from "@/components/Common/Icon";
 import { SearchBar } from "@/components/SearchBar";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Expense } from "@/components/Table/schema";
-import { DataTableContainer } from "./(container)/DataTableContainer";
+import { Expense } from "./(table)/tableSchema";
+import { DataTableContainer } from "./(table)/DataTableContainer";
 import { useFetch } from "@/hooks/use-fetch";
 import { toast } from "sonner";
 

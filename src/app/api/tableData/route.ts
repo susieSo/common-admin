@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { TABLE_DATA } from "@/data/tableData";
-import { Expense } from "@/components/Table/schema";
+import { Expense } from "@/app/app/splash/(table)/tableSchema";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
