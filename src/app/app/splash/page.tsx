@@ -15,8 +15,12 @@ export default function SplashScreen() {
   const searchTerm = search ? search.get("searchTerm") : null;
 
   const [data, setData] = useState<Expense[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchData = async () => {
+    setLoading(true);
+    setError(null);
     try {
       const params = new URLSearchParams();
       params.set("searchKeyword", searchKeyword || "name");
@@ -25,13 +29,16 @@ export default function SplashScreen() {
       const response = await fetch(`/api/tableData?${params.toString()}`);
 
       if (!response.ok) {
-        throw new Error("Failed to fetch table data");
+        throw new Error("검색 결과가 없습니다.");
       }
 
       const data = await response.json();
       setData(data.tableData);
     } catch (error) {
       console.error("Failed to fetch table data:", error);
+      setError("검색 결과가 없습니다.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,13 +58,7 @@ export default function SplashScreen() {
         initialKeyword={searchKeyword || "name"}
         initialTerm={searchTerm || ""}
       />
-      {data.length > 0 ? (
-        <DataTableContainer data={data} />
-      ) : (
-        <div className="w-full h-full p-6 flex justify-center items-center bg-white rounded-xl">
-          <p className="text-base text-gray-500">검색 결과가 없습니다.</p>
-        </div>
-      )}
+      <DataTableContainer data={data} loading={loading} error={error} />
     </>
   );
 }

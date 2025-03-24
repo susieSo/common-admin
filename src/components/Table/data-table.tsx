@@ -26,6 +26,8 @@ import { DataTableToolbar } from "./data-table-toolbar";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  loading: boolean;
+  error: string | null;
   columnFilters: ColumnFiltersState;
   setColumnFilters: OnChangeFn<ColumnFiltersState>;
 }
@@ -35,6 +37,8 @@ export function DataTable<TData, TValue>({
   data,
   columnFilters,
   setColumnFilters,
+  loading,
+  error,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -72,7 +76,19 @@ export function DataTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {loading || !table.getRowModel().rows?.length ? (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-full">
+                Loading...
+              </TableCell>
+            </TableRow>
+          ) : error ? (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-full">
+                {error}
+              </TableCell>
+            </TableRow>
+          ) : (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
@@ -85,12 +101,6 @@ export function DataTable<TData, TValue>({
                 ))}
               </TableRow>
             ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-full">
-                검색 결과가 없습니다.
-              </TableCell>
-            </TableRow>
           )}
         </TableBody>
       </Table>

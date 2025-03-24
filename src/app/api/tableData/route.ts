@@ -15,7 +15,6 @@ export async function GET(req: Request) {
       return value.includes(searchTerm.toLowerCase());
     });
   }
-  console.log(filteredData);
 
   return NextResponse.json({
     tableData: filteredData,

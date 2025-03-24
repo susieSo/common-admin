@@ -6,7 +6,17 @@ import { Expense } from "@/components/Table/schema";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { useState } from "react";
 
-export const DataTableContainer = ({ data }: { data: Expense[] }) => {
+interface DataTableContainerProps {
+  data: Expense[];
+  loading: boolean;
+  error: string | null;
+}
+
+export const DataTableContainer = ({
+  data,
+  loading,
+  error,
+}: DataTableContainerProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   return (
     <DataTable
@@ -14,6 +24,8 @@ export const DataTableContainer = ({ data }: { data: Expense[] }) => {
       data={data}
       columnFilters={columnFilters}
       setColumnFilters={setColumnFilters}
+      loading={loading}
+      error={error}
     />
   );
 };
