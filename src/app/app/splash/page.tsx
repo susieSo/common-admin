@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/Common/Icon";
 import { SplashContainer } from "./(container)/SplashContainer";
 import { fetchTableData } from "@/services/api/table";
+
 export default async function SplashScreen({
   searchParams,
 }: {
