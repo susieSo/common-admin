@@ -30,9 +30,11 @@ type SearchFormValues = z.infer<typeof searchFormSchema>;
 export function SearchBar({
   initialKeyword,
   initialTerm,
+  handleSearch,
 }: {
   initialKeyword: string;
   initialTerm: string;
+  handleSearch: (data: { searchKeyword: string; searchTerm: string }) => void;
 }) {
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -47,11 +49,10 @@ export function SearchBar({
   });
 
   const onSearch = (data: SearchFormValues) => {
-    const params = new URLSearchParams();
-    params.set("searchKeyword", data.searchKeyword);
-    params.set("searchTerm", data.searchTerm);
-
-    replace(`${pathname}?${params.toString()}`);
+    handleSearch({
+      searchKeyword: data.searchKeyword,
+      searchTerm: data.searchTerm,
+    });
   };
 
   const onReset = () => {

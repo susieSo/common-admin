@@ -26,7 +26,6 @@ import { DataTableToolbar } from "./data-table-toolbar";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  loading: boolean;
   columnFilters: ColumnFiltersState;
   setColumnFilters: OnChangeFn<ColumnFiltersState>;
 }
@@ -36,7 +35,6 @@ export function DataTable<TData, TValue>({
   data,
   columnFilters,
   setColumnFilters,
-  loading,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -74,13 +72,7 @@ export function DataTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {loading ? (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-full">
-                Loading...
-              </TableCell>
-            </TableRow>
-          ) : table.getRowModel().rows.length ? (
+          {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
