@@ -35,17 +35,20 @@ const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
     const res = await fetch(
       `http://localhost:3000/api/tableData?${params.toString()}`
     );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
     const data = await res.json();
     return data.tableData;
   } catch (error) {
-    console.error("Error fetching table data:", error);
-    return [];
+    throw error;
   }
 };
 
 export default async function SplashScreen(props: SplashScreenProps) {
   const res = await getServerSideProps(props);
-  console.log(res);
 
   return (
     <>

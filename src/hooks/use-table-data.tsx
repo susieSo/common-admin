@@ -17,18 +17,17 @@ export const useTableData = ({
   initialSearchTerm: string;
 }) => {
   const [data, setData] = useState<Expense[]>(initialData);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   const { replace } = useRouter();
   const searchParams = useSearchParams();
-  const searchKeyword = searchParams ? searchParams.get("searchKeyword") : null;
-  const searchTerm = searchParams ? searchParams.get("searchTerm") : null;
+  const searchKeyword = searchParams.get("searchKeyword") ?? "name";
+  const searchTerm = searchParams.get("searchTerm") ?? "";
 
   const handleSearch = useCallback(
     (data: TableDataSearchParams) => {
       const params = new URLSearchParams();
-      console.log(data);
       if (data.searchKeyword) {
         params.set("searchKeyword", data.searchKeyword);
       }
