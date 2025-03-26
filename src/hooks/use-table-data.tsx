@@ -28,6 +28,7 @@ export const useTableData = ({
   const handleSearch = useCallback(
     (data: TableDataSearchParams) => {
       const params = new URLSearchParams();
+      console.log(data);
       if (data.searchKeyword) {
         params.set("searchKeyword", data.searchKeyword);
       }
@@ -63,11 +64,24 @@ export const useTableData = ({
   };
 
   useEffect(() => {
-    fetchData({
-      searchKeyword: initialSearchKeyword || "name",
-      searchTerm: initialSearchTerm || "",
-    });
-  }, [searchKeyword, initialSearchKeyword, searchTerm, initialSearchTerm]);
+    if (
+      searchKeyword === initialSearchKeyword &&
+      searchTerm === initialSearchTerm
+    ) {
+      setData(initialData);
+    } else {
+      fetchData({
+        searchKeyword: searchKeyword || initialSearchKeyword,
+        searchTerm: searchTerm || initialSearchTerm,
+      });
+    }
+  }, [
+    searchKeyword,
+    initialSearchKeyword,
+    searchTerm,
+    initialSearchTerm,
+    initialData,
+  ]);
 
   return { data, loading, error, handleSearch };
 };
