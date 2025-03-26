@@ -2,24 +2,19 @@
 
 import { SearchBar } from "@/components/SearchBar";
 import { columns } from "../(table)/tableColumns";
-import { Expense } from "../(table)/tableSchema";
 import { DataTable } from "@/components/Table/data-table";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { useTableData } from "@/hooks/use-table-data";
+import { SplashScreenProps } from "../page";
 
-export const DataTableContainer = (props: { data: Expense[] }) => {
+export const DataTableContainer = (props: SplashScreenProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-
-  const search = useSearchParams();
-  const searchKeyword = search.get("searchKeyword") ?? "name";
-  const searchTerm = search.get("searchTerm") ?? "";
 
   const { data, loading, error, handleSearch } = useTableData({
     initialData: props.data,
-    initialSearchKeyword: searchKeyword,
-    initialSearchTerm: searchTerm,
+    initialSearchKeyword: props.searchKeyword,
+    initialSearchTerm: props.searchTerm,
   });
 
   if (error) {
@@ -34,8 +29,8 @@ export const DataTableContainer = (props: { data: Expense[] }) => {
   return (
     <>
       <SearchBar
-        initialKeyword={searchKeyword}
-        initialTerm={searchTerm}
+        initialKeyword={props.searchKeyword}
+        initialTerm={props.searchTerm}
         handleSearch={handleSearch}
       />
       {loading ? (
