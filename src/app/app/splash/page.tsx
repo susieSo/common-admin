@@ -1,19 +1,23 @@
-"use client";
-
 import { Title } from "@/components/Layout/title";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/Common/Icon";
-import { SearchBar } from "@/components/SearchBar";
-import { useSearchParams } from "next/navigation";
 import { DataTableContainer } from "./(container)/DataTableContainer";
-import { useSplashData } from "@/hooks/use-splash-data";
+import { TableDataSearchParams } from "@/hooks/use-table-data";
 
-export default function SplashScreen() {
-  const search = useSearchParams();
-  const searchKeyword = search ? search.get("searchKeyword") : null;
-  const searchTerm = search ? search.get("searchTerm") : null;
+const getServerSideProps = async (props: TableDataSearchParams) => {
+  const { searchKeyword, searchTerm } = props;
 
-  const { data, loading, error, handleSearch } = useSplashData();
+  return {
+    props: {
+      data: [],
+      searchKeyword,
+      searchTerm,
+    },
+  };
+};
+
+export default async function SplashScreen(props: TableDataSearchParams) {
+  const res = await getServerSideProps(props);
 
   return (
     <>
@@ -23,12 +27,7 @@ export default function SplashScreen() {
           신규등록 <Icon iconType="plus" size="sm" fill="white" />
         </Button>
       </div>
-      <SearchBar
-        initialKeyword={searchKeyword || "name"}
-        initialTerm={searchTerm || ""}
-        handleSearch={handleSearch}
-      />
-      <DataTableContainer data={data} loading={loading} error={error} />
+      <DataTableContainer data={res.props.data} />
     </>
   );
 }
