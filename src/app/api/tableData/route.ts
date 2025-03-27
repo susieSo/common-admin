@@ -12,7 +12,7 @@ export async function GET(req: Request) {
   >;
   const searchTerm = url.searchParams.get("searchTerm");
 
-  let filteredData = [...TABLE_DATA];
+  let filteredData = [...tableData];
 
   if (searchKeyword && searchTerm) {
     filteredData = filteredData.filter((item) => {
@@ -26,4 +26,11 @@ export async function GET(req: Request) {
     filtered: searchKeyword && searchTerm ? true : false,
     query: { searchKeyword, searchTerm },
   });
+}
+
+export async function DELETE(req: Request) {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id");
+  tableData = tableData.filter((item) => item.id !== Number(id));
+  return NextResponse.json({ message: "Deleted", tableData });
 }

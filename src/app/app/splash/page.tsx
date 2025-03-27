@@ -2,13 +2,7 @@ import { Title } from "@/components/Layout/title";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/Common/Icon";
 import { DataTableContainer } from "./(container)/DataTableContainer";
-import {
-  QueryClient,
-  dehydrate,
-  HydrationBoundary,
-} from "@tanstack/react-query";
 import { TableDataSearchParams } from "@/types/table";
-import { GetServerSideProps } from "next";
 
 const getServerSideProps = async (props: {
   searchParams: TableDataSearchParams;
@@ -52,16 +46,6 @@ export default async function SplashScreen(props: {
   searchParams: TableDataSearchParams;
 }) {
   const res = await getServerSideProps(props);
-  // const queryClient = new QueryClient();
-
-  // const search = (await searchParams) || {};
-  // const searchKeyword = search?.searchKeyword || "name";
-  // const searchTerm = search?.searchTerm || "";
-
-  // await queryClient.prefetchQuery({
-  //   queryKey: ["tableData", searchKeyword, searchTerm],
-  //   queryFn: () => fetchTableData(searchKeyword, searchTerm),
-  // });
 
   return (
     <>
@@ -71,25 +55,7 @@ export default async function SplashScreen(props: {
           신규등록 <Icon iconType="plus" size="sm" fill="white" />
         </Button>
       </div>
-      {/* <DataTableContainer
-        data={[]}
-        searchKeyword={searchKeyword}
-        searchTerm={searchTerm}
-      /> */}
       <DataTableContainer {...res.props} />
     </>
-    // <HydrationBoundary state={dehydrate(queryClient)}>
-    //   <div className="py-8 flex justify-between items-center">
-    //     <Title />
-    //     <Button size="lg" variant="gradient">
-    //       신규등록 <Icon iconType="plus" size="sm" fill="white" />
-    //     </Button>
-    //   </div>
-    //   <DataTableContainer
-    //     data={[]}
-    //     searchKeyword={searchKeyword}
-    //     searchTerm={searchTerm}
-    //   />
-    // </HydrationBoundary>
   );
 }

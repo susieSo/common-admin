@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const expenseSchema = z.object({
-  id: z.string(),
+  id: z.number(),
   name: z.string(),
   email: z.string(),
   department: z.enum(["Finance", "HR", "IT", "Marketing"]),

@@ -14,9 +14,10 @@ import { Button } from "@/components/ui/button";
 interface AlertPopupProps {
   buttonText: string;
   title: string;
-  description: string;
+  description?: string;
   className?: string;
   isCancel?: boolean;
+  onConfirm?: () => void;
 }
 
 export function AlertPopup({
@@ -25,11 +26,14 @@ export function AlertPopup({
   description,
   className,
   isCancel,
+  onConfirm,
 }: AlertPopupProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild className={className}>
-        <Button variant="outline">{buttonText}</Button>
+        <Button variant="default" size="sm">
+          {buttonText}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -38,7 +42,7 @@ export function AlertPopup({
         </AlertDialogHeader>
         <AlertDialogFooter>
           {isCancel && <AlertDialogCancel>취소</AlertDialogCancel>}
-          <AlertDialogAction>확인</AlertDialogAction>
+          <AlertDialogAction onClick={onConfirm}>확인</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

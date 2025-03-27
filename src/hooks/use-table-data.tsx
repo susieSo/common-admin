@@ -1,12 +1,16 @@
 import { Expense } from "@/app/app/splash/(table)/tableSchema";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { TableDataSearchParams } from "@/types/table";
 
 const fetchData = async (params: TableDataSearchParams) => {
   const response = await fetch(
-    `/api/tableData?searchKeyword=${params.searchKeyword}&searchTerm=${params.searchTerm}`
+    `/api/tableData?searchKeyword=${params.searchKeyword}&searchTerm=${params.searchTerm}`,
+    {
+      method: "GET",
+      cache: "no-store",
+    }
   );
   if (!response.ok) {
     throw new Error("데이터를 불러오는데 실패했습니다.");
@@ -50,4 +54,23 @@ export const useTableData = ({ initialData }: { initialData: Expense[] }) => {
   });
 
   return { data: data as Expense[], isLoading, error, handleSearch };
+};
+
+export const useDeleteTableData = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: number) => {
+      const response = await fetch(`/api/tableData?id=${id}`, {
+        method: "DELETE",
+        cache: "no-store",
+      });
+      if (!response.ok) {
+        throw new Error("데이터를 삭제하는데 실패했습니다.");
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tableData"] });
+    },
+  });
 };

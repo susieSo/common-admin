@@ -2,10 +2,10 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Expense } from "./tableSchema";
-// import { DataTableRowActions } from "./data-table-row-actions";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
+import { DataTableRowAction } from "@/components/Table/data-table-row-action";
 
 export const columns: ColumnDef<Expense>[] = [
   {
@@ -138,8 +138,9 @@ export const columns: ColumnDef<Expense>[] = [
       return rowDate >= startDate && rowDate <= endDate;
     },
   },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <DataTableRowActions row={row} />,
-  // },
+  {
+    id: "actions",
+    accessorKey: "actions",
+    cell: ({ row }) => <DataTableRowAction row={row} />,
+  },
 ];
