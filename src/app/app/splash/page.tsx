@@ -8,6 +8,24 @@ import {
   HydrationBoundary,
 } from "@tanstack/react-query";
 import { TableDataSearchParams } from "@/types/table";
+import { GetServerSideProps } from "next";
+
+const getServerSideProps = async (props: {
+  searchParams: TableDataSearchParams;
+}) => {
+  const search = (await props.searchParams) || {};
+  const searchKeyword = (search?.searchKeyword as string) || "name";
+  const searchTerm = (search?.searchTerm as string) || "";
+  const data = await fetchTableData(searchKeyword, searchTerm);
+
+  return {
+    props: {
+      data: data,
+      searchKeyword: searchKeyword,
+      searchTerm: searchTerm,
+    },
+  };
+};
 
 const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
   try {
@@ -30,35 +48,48 @@ const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
   }
 };
 
-export default async function SplashScreen({
-  searchParams,
-}: {
+export default async function SplashScreen(props: {
   searchParams: TableDataSearchParams;
 }) {
-  const queryClient = new QueryClient();
+  const res = await getServerSideProps(props);
+  // const queryClient = new QueryClient();
 
-  const search = (await searchParams) || {};
-  const searchKeyword = search?.searchKeyword || "name";
-  const searchTerm = search?.searchTerm || "";
+  // const search = (await searchParams) || {};
+  // const searchKeyword = search?.searchKeyword || "name";
+  // const searchTerm = search?.searchTerm || "";
 
-  await queryClient.prefetchQuery({
-    queryKey: ["tableData", searchKeyword, searchTerm],
-    queryFn: () => fetchTableData(searchKeyword, searchTerm),
-  });
+  // await queryClient.prefetchQuery({
+  //   queryKey: ["tableData", searchKeyword, searchTerm],
+  //   queryFn: () => fetchTableData(searchKeyword, searchTerm),
+  // });
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
+    <>
       <div className="py-8 flex justify-between items-center">
         <Title />
         <Button size="lg" variant="gradient">
           신규등록 <Icon iconType="plus" size="sm" fill="white" />
         </Button>
       </div>
-      <DataTableContainer
+      {/* <DataTableContainer
         data={[]}
         searchKeyword={searchKeyword}
         searchTerm={searchTerm}
-      />
-    </HydrationBoundary>
+      /> */}
+      <DataTableContainer {...res.props} />
+    </>
+    // <HydrationBoundary state={dehydrate(queryClient)}>
+    //   <div className="py-8 flex justify-between items-center">
+    //     <Title />
+    //     <Button size="lg" variant="gradient">
+    //       신규등록 <Icon iconType="plus" size="sm" fill="white" />
+    //     </Button>
+    //   </div>
+    //   <DataTableContainer
+    //     data={[]}
+    //     searchKeyword={searchKeyword}
+    //     searchTerm={searchTerm}
+    //   />
+    // </HydrationBoundary>
   );
 }
