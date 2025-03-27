@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../styles/globals.css";
 import AdminLayout from "@/components/Layout/admin-layout";
 import { Toaster } from "@/components/ui/sonner";
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,8 +17,10 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body>
-        <AdminLayout>{children}</AdminLayout>
-        <Toaster />
+        <Providers>
+          <AdminLayout>{children}</AdminLayout>
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

@@ -1,86 +1,53 @@
 import { Expense } from "@/app/app/splash/(table)/tableSchema";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
+import { TableDataSearchParams } from "@/types/table";
 
-export interface TableDataSearchParams {
-  searchKeyword: string;
-  searchTerm: string;
-}
+const fetchData = async (params: TableDataSearchParams) => {
+  const response = await fetch(
+    `/api/tableData?searchKeyword=${params.searchKeyword}&searchTerm=${params.searchTerm}`
+  );
+  if (!response.ok) {
+    throw new Error("데이터를 불러오는데 실패했습니다.");
+  }
+  const data = await response.json();
+  return data.tableData;
+};
 
-export const useTableData = ({
-  initialData,
-  initialSearchKeyword,
-  initialSearchTerm,
-}: {
-  initialData: Expense[];
-  initialSearchKeyword: string;
-  initialSearchTerm: string;
-}) => {
-  const [data, setData] = useState<Expense[]>(initialData);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-
+export const useTableData = ({ initialData }: { initialData: Expense[] }) => {
   const { replace } = useRouter();
   const searchParams = useSearchParams();
   const searchKeyword = searchParams.get("searchKeyword") ?? "name";
   const searchTerm = searchParams.get("searchTerm") ?? "";
 
   const handleSearch = useCallback(
-    (data: TableDataSearchParams) => {
-      const params = new URLSearchParams();
-      if (data.searchKeyword) {
-        params.set("searchKeyword", data.searchKeyword);
+    (params: TableDataSearchParams) => {
+      const newParams = new URLSearchParams();
+      if (params.searchKeyword) {
+        newParams.set("searchKeyword", params.searchKeyword);
       }
-      if (data.searchTerm) {
-        params.set("searchTerm", data.searchTerm);
+      if (params.searchTerm) {
+        newParams.set("searchTerm", params.searchTerm);
       }
       const newUrl = `${window.location.pathname}${
-        params.toString() ? `?${params.toString()}` : ""
+        newParams.toString() ? `?${newParams.toString()}` : ""
       }`;
       replace(newUrl, { scroll: false });
     },
     [replace]
   );
 
-  const fetchData = async (params: TableDataSearchParams) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await fetch(
-        `/api/tableData?searchKeyword=${params.searchKeyword}&searchTerm=${params.searchTerm}`
-      );
-      const data = await response.json();
-      setData(data.tableData);
-    } catch (error) {
-      setError(
-        error instanceof Error
-          ? error
-          : new Error("데이터를 불러오는데 실패했습니다.")
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (
-      searchKeyword === initialSearchKeyword &&
-      searchTerm === initialSearchTerm
-    ) {
-      setData(initialData);
-    } else {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["tableData", searchKeyword, searchTerm],
+    queryFn: () =>
       fetchData({
-        searchKeyword: searchKeyword || initialSearchKeyword,
-        searchTerm: searchTerm || initialSearchTerm,
-      });
-    }
-  }, [
-    searchKeyword,
-    initialSearchKeyword,
-    searchTerm,
-    initialSearchTerm,
-    initialData,
-  ]);
+        searchKeyword,
+        searchTerm,
+      }),
+    placeholderData: (previousData) => previousData ?? initialData,
+    enabled: true,
+  });
 
-  return { data, loading, error, handleSearch };
+  return { data: data as Expense[], isLoading, error, handleSearch };
 };

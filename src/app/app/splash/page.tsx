@@ -2,29 +2,12 @@ import { Title } from "@/components/Layout/title";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/Common/Icon";
 import { DataTableContainer } from "./(container)/DataTableContainer";
-import { GetServerSideProps } from "next";
-import { Expense } from "./(table)/tableSchema";
-
-export interface SplashScreenProps {
-  data: Expense[];
-  searchKeyword: string;
-  searchTerm: string;
-}
-
-const getServerSideProps = (async (context) => {
-  const search = (await context.params) || {};
-  const searchKeyword = (search?.searchKeyword as string) || "name";
-  const searchTerm = (search?.searchTerm as string) || "";
-  const data = await fetchTableData(searchKeyword, searchTerm);
-
-  return {
-    props: {
-      data: data,
-      searchKeyword: searchKeyword,
-      searchTerm: searchTerm,
-    },
-  };
-}) satisfies GetServerSideProps;
+import {
+  QueryClient,
+  dehydrate,
+  HydrationBoundary,
+} from "@tanstack/react-query";
+import { TableDataSearchParams } from "@/types/table";
 
 const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
   try {
@@ -32,33 +15,50 @@ const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
     params.set("searchKeyword", searchKeyword || "name");
     params.set("searchTerm", searchTerm || "");
 
-    const res = await fetch(
+    const response = await fetch(
       `http://localhost:3000/api/tableData?${params.toString()}`
     );
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
+    if (!response.ok) {
+      throw new Error("데이터를 불러오는데 실패했습니다.");
     }
 
-    const data = await res.json();
+    const data = await response.json();
     return data.tableData;
   } catch (error) {
     throw error;
   }
 };
 
-export default async function SplashScreen(props: SplashScreenProps) {
-  const res = await getServerSideProps(props);
+export default async function SplashScreen({
+  searchParams,
+}: {
+  searchParams: TableDataSearchParams;
+}) {
+  const queryClient = new QueryClient();
+
+  const search = (await searchParams) || {};
+  const searchKeyword = search?.searchKeyword || "name";
+  const searchTerm = search?.searchTerm || "";
+
+  await queryClient.prefetchQuery({
+    queryKey: ["tableData", searchKeyword, searchTerm],
+    queryFn: () => fetchTableData(searchKeyword, searchTerm),
+  });
 
   return (
-    <>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="py-8 flex justify-between items-center">
         <Title />
         <Button size="lg" variant="gradient">
           신규등록 <Icon iconType="plus" size="sm" fill="white" />
         </Button>
       </div>
-      <DataTableContainer {...res.props} />
-    </>
+      <DataTableContainer
+        data={[]}
+        searchKeyword={searchKeyword}
+        searchTerm={searchTerm}
+      />
+    </HydrationBoundary>
   );
 }

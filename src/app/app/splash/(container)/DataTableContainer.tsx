@@ -6,15 +6,13 @@ import { DataTable } from "@/components/Table/data-table";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { useState } from "react";
 import { useTableData } from "@/hooks/use-table-data";
-import { SplashScreenProps } from "../page";
+import { TableDataProps } from "@/types/table";
 
-export const DataTableContainer = (props: SplashScreenProps) => {
+export const DataTableContainer = (props: TableDataProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const { data, loading, error, handleSearch } = useTableData({
+  const { data, isLoading, error, handleSearch } = useTableData({
     initialData: props.data,
-    initialSearchKeyword: props.searchKeyword,
-    initialSearchTerm: props.searchTerm,
   });
 
   if (error) {
@@ -33,7 +31,7 @@ export const DataTableContainer = (props: SplashScreenProps) => {
         initialTerm={props.searchTerm}
         handleSearch={handleSearch}
       />
-      {loading ? (
+      {isLoading ? (
         <div className="mb-4 p-6 text-center text-sm text-black-800 bg-white rounded-xl">
           Loading...
         </div>

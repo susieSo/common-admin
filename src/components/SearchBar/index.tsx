@@ -34,7 +34,7 @@ export function SearchBar({
 }: {
   initialKeyword: string;
   initialTerm: string;
-  handleSearch: (data: { searchKeyword: string; searchTerm: string }) => void;
+  handleSearch: (params: { searchKeyword: string; searchTerm: string }) => void;
 }) {
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -48,10 +48,10 @@ export function SearchBar({
     },
   });
 
-  const onSearch = (data: SearchFormValues) => {
+  const onSearch = (params: SearchFormValues) => {
     handleSearch({
-      searchKeyword: data.searchKeyword,
-      searchTerm: data.searchTerm,
+      searchKeyword: params.searchKeyword,
+      searchTerm: params.searchTerm,
     });
   };
 
