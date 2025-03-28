@@ -28,6 +28,11 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   columnFilters: ColumnFiltersState;
   setColumnFilters: OnChangeFn<ColumnFiltersState>;
+  pagination: {
+    pageIndex: number;
+    pageSize: number;
+  };
+  setPagination: (pagination: { pageIndex: number; pageSize: number }) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -35,6 +40,8 @@ export function DataTable<TData, TValue>({
   data,
   columnFilters,
   setColumnFilters,
+  pagination,
+  setPagination,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -44,9 +51,23 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
+    onPaginationChange: (updaterOrValue) => {
+      if (typeof updaterOrValue === "function") {
+        setPagination(
+          updaterOrValue({
+            pageIndex: pagination.pageIndex,
+            pageSize: pagination.pageSize,
+          })
+        );
+      } else {
+        setPagination(updaterOrValue);
+      }
+    },
     state: {
       columnFilters,
+      pagination,
     },
+    autoResetPageIndex: false,
   });
 
   return (

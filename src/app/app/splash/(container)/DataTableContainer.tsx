@@ -10,6 +10,10 @@ import { TableDataProps } from "@/types/table";
 
 export const DataTableContainer = (props: TableDataProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
   const { data, isLoading, error, handleSearch } = useGetTableData({
     initialData: props.data,
@@ -41,6 +45,8 @@ export const DataTableContainer = (props: TableDataProps) => {
           data={data}
           columnFilters={columnFilters}
           setColumnFilters={setColumnFilters}
+          pagination={pagination}
+          setPagination={setPagination}
         />
       ) : (
         <div className="mb-4 p-6 text-center text-sm text-black-800 bg-white rounded-xl">

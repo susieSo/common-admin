@@ -10,6 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useEffect } from "react";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -24,6 +25,12 @@ export function DataTablePagination<TData>({
   const onPageChange = (page: number) => {
     table.setPageIndex(page - 1);
   };
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      table.setPageIndex(totalPages - 1);
+    }
+  }, [currentPage, totalPages, table]);
 
   return (
     <Pagination>
