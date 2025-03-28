@@ -20,6 +20,7 @@ export function DataTablePagination<TData>({
 }: DataTablePaginationProps<TData>) {
   const currentPage = table.getState().pagination.pageIndex + 1;
   const totalPages = table.getPageCount();
+
   const onPageChange = (page: number) => {
     table.setPageIndex(page - 1);
   };

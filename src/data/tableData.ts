@@ -10,6 +10,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Expense",
     amount: 120000,
     date: "2025-03-15",
+    exposure: false,
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Income",
     amount: 3000000,
     date: "2025-03-01",
+    exposure: false,
   },
   {
     id: 3,
@@ -30,6 +32,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Expense",
     amount: 450000,
     date: "2025-03-12",
+    exposure: false,
   },
   {
     id: 4,
@@ -40,6 +43,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Expense",
     amount: 800000,
     date: "2025-03-10",
+    exposure: false,
   },
   {
     id: 5,
@@ -50,6 +54,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Income",
     amount: 250000,
     date: "2025-03-05",
+    exposure: false,
   },
   {
     id: 6,
@@ -60,6 +65,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Expense",
     amount: 5000000,
     date: "2025-03-08",
+    exposure: false,
   },
   {
     id: 7,
@@ -70,6 +76,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Expense",
     amount: 350000,
     date: "2025-03-09",
+    exposure: false,
   },
   {
     id: 8,
@@ -80,6 +87,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Income",
     amount: 600000,
     date: "2025-03-14",
+    exposure: false,
   },
   {
     id: 9,
@@ -90,6 +98,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Expense",
     amount: 200000,
     date: "2025-03-02",
+    exposure: false,
   },
   {
     id: 10,
@@ -100,6 +109,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Income",
     amount: 500000,
     date: "2025-03-06",
+    exposure: false,
   },
   {
     id: 11,
@@ -110,6 +120,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Expense",
     amount: 900000,
     date: "2025-03-16",
+    exposure: false,
   },
   {
     id: 12,
@@ -120,6 +131,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Income",
     amount: 180000,
     date: "2025-03-04",
+    exposure: false,
   },
   {
     id: 13,
@@ -130,6 +142,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Expense",
     amount: 450000,
     date: "2025-03-13",
+    exposure: false,
   },
   {
     id: 14,
@@ -140,6 +153,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Income",
     amount: 3200000,
     date: "2025-03-17",
+    exposure: false,
   },
   {
     id: 15,
@@ -150,6 +164,7 @@ export const TABLE_DATA: Expense[] = [
     type: "Expense",
     amount: 750000,
     date: "2025-03-20",
+    exposure: false,
   },
   {
     id: 16,
@@ -160,5 +175,6 @@ export const TABLE_DATA: Expense[] = [
     type: "Income",
     amount: 280000,
     date: "2025-03-19",
+    exposure: false,
   },
 ];

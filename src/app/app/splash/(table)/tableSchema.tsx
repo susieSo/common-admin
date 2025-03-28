@@ -9,6 +9,7 @@ export const expenseSchema = z.object({
   type: z.enum(["Income", "Expense"]),
   amount: z.number(),
   date: z.string(),
+  exposure: z.boolean(),
 });
 
 export type Expense = z.infer<typeof expenseSchema>;

@@ -1,11 +1,9 @@
-"use client";
-
 import { ColumnDef } from "@tanstack/react-table";
 import { Expense } from "./tableSchema";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableRowAction } from "@/components/Table/data-table-row-action";
+import { DataTableRowAction } from "./tableRowAction";
 
 export const columns: ColumnDef<Expense>[] = [
   {

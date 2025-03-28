@@ -19,7 +19,11 @@ const fetchData = async (params: TableDataSearchParams) => {
   return data.tableData;
 };
 
-export const useTableData = ({ initialData }: { initialData: Expense[] }) => {
+export const useGetTableData = ({
+  initialData,
+}: {
+  initialData: Expense[];
+}) => {
   const { replace } = useRouter();
   const searchParams = useSearchParams();
   const searchKeyword = searchParams.get("searchKeyword") ?? "name";
@@ -68,6 +72,40 @@ export const useDeleteTableData = () => {
         throw new Error("데이터를 삭제하는데 실패했습니다.");
       }
       return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tableData"] });
+    },
+  });
+};
+
+interface UpdateTableDataParams {
+  id: number;
+  exposure: boolean;
+}
+
+export const useUpdateTableData = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, exposure }: UpdateTableDataParams) => {
+      const response = await fetch(`/api/tableData?id=${id}`, {
+        method: "PUT",
+        cache: "no-store",
+        body: JSON.stringify({ exposure }),
+      });
+      if (!response.ok) {
+        throw new Error("데이터를 업데이트하는데 실패했습니다.");
+      }
+      return response.json();
+    },
+    onMutate: async ({ id, exposure }: UpdateTableDataParams) => {
+      await queryClient.cancelQueries({ queryKey: ["tableData"] });
+
+      queryClient.setQueryData<Expense[]>(["tableData"], (old) =>
+        old
+          ? old.map((item) => (item.id === id ? { ...item, exposure } : item))
+          : []
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tableData"] });

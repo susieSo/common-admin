@@ -5,13 +5,13 @@ import { columns } from "../(table)/tableColumns";
 import { DataTable } from "@/components/Table/data-table";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { useState } from "react";
-import { useTableData } from "@/hooks/use-table-data";
+import { useGetTableData } from "@/hooks/use-table-data";
 import { TableDataProps } from "@/types/table";
 
 export const DataTableContainer = (props: TableDataProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const { data, isLoading, error, handleSearch } = useTableData({
+  const { data, isLoading, error, handleSearch } = useGetTableData({
     initialData: props.data,
   });
 
