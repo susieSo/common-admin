@@ -18,7 +18,13 @@ export const DataTableRowAction = ({ row }: { row: Row<Expense> }) => {
         title="삭제하시겠습니까?"
         className="w-full"
         isCancel
-        onConfirm={() => deleteTableData(row.original.id)}
+        onConfirm={() => {
+          addToast({
+            message: "데이터가 삭제되었습니다.",
+            type: "success",
+          });
+          deleteTableData(row.original.id);
+        }}
       />
       <Switch
         checked={row.original.exposure}
