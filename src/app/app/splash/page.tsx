@@ -2,6 +2,7 @@ import { Title } from "@/components/Layout/title";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/Common/Icon";
 import { DataTableContainer } from "./(container)/DataTableContainer";
+import { TableDataSearchParams } from "@/types/table";
 
 const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
   try {
@@ -25,7 +26,7 @@ const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
 };
 
 export default async function SplashScreenPage(props: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: TableDataSearchParams;
 }) {
   const search = await props.searchParams;
   const searchKeyword = (search?.searchKeyword || "name") as string;
