@@ -24,10 +24,10 @@ const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
   }
 };
 
-export default async function SplashScreenPage(searchParams: {
+export default async function SplashScreenPage(props: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const search = await searchParams.searchParams;
+  const search = await props.searchParams;
   const searchKeyword = (search?.searchKeyword || "name") as string;
   const searchTerm = (search?.searchTerm || "") as string;
   const data = await fetchTableData(searchKeyword, searchTerm);
