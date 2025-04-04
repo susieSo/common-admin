@@ -4,23 +4,6 @@ import { Icon } from "@/components/Common/Icon";
 import { DataTableContainer } from "./(container)/DataTableContainer";
 import { TableDataSearchParams } from "@/types/table";
 
-const getServerSideProps = async (props: {
-  searchParams: TableDataSearchParams;
-}) => {
-  const search = (await props.searchParams) || {};
-  const searchKeyword = (search?.searchKeyword as string) || "name";
-  const searchTerm = (search?.searchTerm as string) || "";
-  const data = await fetchTableData(searchKeyword, searchTerm);
-
-  return {
-    props: {
-      data: data,
-      searchKeyword: searchKeyword,
-      searchTerm: searchTerm,
-    },
-  };
-};
-
 const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
   try {
     const params = new URLSearchParams();
@@ -45,7 +28,10 @@ const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
 export default async function SplashScreen(props: {
   searchParams: TableDataSearchParams;
 }) {
-  const res = await getServerSideProps(props);
+  const search = (await props.searchParams) || {};
+  const searchKeyword = (search?.searchKeyword as string) || "name";
+  const searchTerm = (search?.searchTerm as string) || "";
+  const data = await fetchTableData(searchKeyword, searchTerm);
 
   return (
     <>
@@ -55,7 +41,7 @@ export default async function SplashScreen(props: {
           신규등록 <Icon iconType="plus" size="sm" fill="white" />
         </Button>
       </div>
-      <DataTableContainer {...res.props} />
+      <DataTableContainer {...data} />
     </>
   );
 }
