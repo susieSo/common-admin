@@ -3,7 +3,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { TableDataSearchParams } from "@/types/table";
-
+import { Table } from "@tanstack/react-table";
 const fetchData = async (params: TableDataSearchParams) => {
   const response = await fetch(
     `/api/tableData?searchKeyword=${params.searchKeyword}&searchTerm=${params.searchTerm}`,
@@ -82,6 +82,37 @@ export const useDeleteTableData = () => {
         ["tableData", searchKeyword, searchTerm],
         (old) => old?.filter((item) => item.id !== id) ?? []
       );
+    },
+  });
+};
+
+export const useSeveralDeleteTableData = (table: Table<Expense>) => {
+  const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
+  const searchKeyword = searchParams.get("searchKeyword") ?? "name";
+  const searchTerm = searchParams.get("searchTerm") ?? "";
+
+  return useMutation({
+    mutationFn: async (ids: number[]) => {
+      const response = await fetch(`/api/tableData?ids=${ids.join(",")}`, {
+        method: "DELETE",
+        cache: "no-store",
+      });
+      if (!response.ok) {
+        throw new Error("데이터를 삭제하는데 실패했습니다.");
+      }
+      return response.json();
+    },
+    onMutate: async (ids: number[]) => {
+      queryClient.setQueryData<Expense[]>(
+        ["tableData", searchKeyword, searchTerm],
+        (old) => old?.filter((item) => !ids.includes(item.id)) ?? []
+      );
+    },
+    onSuccess: () => {
+      if (table) {
+        table.toggleAllRowsSelected(false);
+      }
     },
   });
 };

@@ -19,23 +19,23 @@ export const DataTableRowAction = ({ row }: { row: Row<Expense> }) => {
         className="w-full"
         isCancel
         onConfirm={() => {
+          deleteTableData(row.original.id);
           addToast({
             message: "데이터가 삭제되었습니다.",
             type: "success",
           });
-          deleteTableData(row.original.id);
         }}
       />
       <Switch
         checked={row.original.exposure}
         onCheckedChange={() => {
-          addToast({
-            message: "데이터가 업데이트되었습니다.",
-            type: "success",
-          });
           updateTableData({
             id: row.original.id,
             exposure: !row.original.exposure,
+          });
+          addToast({
+            message: "데이터가 업데이트되었습니다.",
+            type: "success",
           });
         }}
       />

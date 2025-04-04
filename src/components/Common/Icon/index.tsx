@@ -52,7 +52,7 @@ export const IconTypes = {
   toastError: Icons.icToastError,
 } as const;
 
-type IconTypes = keyof typeof IconTypes;
+export type IconTypes = keyof typeof IconTypes;
 
 export type IconType = ForwardRefExoticComponent<
   Omit<IconProps, "ref"> & RefAttributes<SVGSVGElement>

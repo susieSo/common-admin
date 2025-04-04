@@ -1,6 +1,4 @@
 import { Table } from "@tanstack/react-table";
-import { Button } from "../ui/button";
-import { Icon } from "../Common/Icon";
 import {
   Select,
   SelectContent,
@@ -8,7 +6,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import { useSeveralDeleteTableData } from "@/hooks/use-table-data";
+import { useToast } from "@/hooks/use-toast";
+import { AlertPopup } from "../Popup/alert-popup";
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
@@ -16,6 +16,8 @@ interface DataTableToolbarProps<TData> {
 export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
+  const { mutate: deleteSeveralTableData } = useSeveralDeleteTableData(table);
+  const { addToast } = useToast();
   return (
     <div className="pl-6 pr-10 pb-4 flex items-center justify-between">
       <div>
@@ -28,9 +30,38 @@ export function DataTableToolbar<TData>({
         </p>
       </div>
       <div className="flex items-center">
-        <Button size="md" className="mr-4">
-          계정권한관리 <Icon iconType="setting" size="s" fill="white" />
-        </Button>
+        {table.getFilteredSelectedRowModel().rows.length === 0 ? (
+          <AlertPopup
+            buttonText="선택삭제"
+            title="선택한 데이터가 없습니다."
+            className="mr-4"
+            variant="secondary"
+            size="md"
+            hasIcon
+            iconType="trash"
+          />
+        ) : (
+          <AlertPopup
+            buttonText="선택삭제"
+            title="선택한 데이터를 삭제하시겠습니까?"
+            className="mr-4"
+            variant="secondary"
+            size="md"
+            hasIcon
+            iconType="trash"
+            isCancel
+            onConfirm={() => {
+              const selectedRows = table.getFilteredSelectedRowModel().rows;
+              const selectedIds = selectedRows.map((row) => row.original.id);
+              deleteSeveralTableData(selectedIds);
+              addToast({
+                message: "선택한 데이터가 삭제되었습니다.",
+                type: "success",
+              });
+            }}
+          />
+        )}
+
         <Select
           onValueChange={(value) => {
             table.setSorting([

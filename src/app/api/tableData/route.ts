@@ -27,8 +27,13 @@ export async function GET(req: Request) {
 
 export async function DELETE(req: Request) {
   const url = new URL(req.url);
-  const id = url.searchParams.get("id");
-  tableData = tableData.filter((item) => item.id !== Number(id));
+  const ids = url.searchParams.get("ids")?.split(",").map(Number) || [];
+
+  if (ids.length === 0) {
+    return NextResponse.json({ message: "No ids provided" }, { status: 400 });
+  }
+
+  tableData = tableData.filter((item) => !ids.includes(item.id));
   return NextResponse.json({ message: "Deleted", tableData });
 }
 
