@@ -62,6 +62,10 @@ export const useGetTableData = ({
 
 export const useDeleteTableData = () => {
   const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
+  const searchKeyword = searchParams.get("searchKeyword") ?? "name";
+  const searchTerm = searchParams.get("searchTerm") ?? "";
+
   return useMutation({
     mutationFn: async (id: number) => {
       const response = await fetch(`/api/tableData?id=${id}`, {
@@ -73,8 +77,11 @@ export const useDeleteTableData = () => {
       }
       return response.json();
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tableData"] });
+    onMutate: async (id: number) => {
+      queryClient.setQueryData<Expense[]>(
+        ["tableData", searchKeyword, searchTerm],
+        (old) => old?.filter((item) => item.id !== id) ?? []
+      );
     },
   });
 };
@@ -86,6 +93,10 @@ interface UpdateTableDataParams {
 
 export const useUpdateTableData = () => {
   const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
+  const searchKeyword = searchParams.get("searchKeyword") ?? "name";
+  const searchTerm = searchParams.get("searchTerm") ?? "";
+
   return useMutation({
     mutationFn: async ({ id, exposure }: UpdateTableDataParams) => {
       const response = await fetch(`/api/tableData?id=${id}`, {
@@ -99,16 +110,17 @@ export const useUpdateTableData = () => {
       return response.json();
     },
     onMutate: async ({ id, exposure }: UpdateTableDataParams) => {
-      await queryClient.cancelQueries({ queryKey: ["tableData"] });
+      await queryClient.cancelQueries({
+        queryKey: ["tableData", searchKeyword, searchTerm],
+      });
 
-      queryClient.setQueryData<Expense[]>(["tableData"], (old) =>
-        old
-          ? old.map((item) => (item.id === id ? { ...item, exposure } : item))
-          : []
+      queryClient.setQueryData<Expense[]>(
+        ["tableData", searchKeyword, searchTerm],
+        (old) =>
+          old
+            ? old.map((item) => (item.id === id ? { ...item, exposure } : item))
+            : []
       );
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tableData"] });
     },
   });
 };
