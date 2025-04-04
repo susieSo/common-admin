@@ -2,7 +2,6 @@ import { Title } from "@/components/Layout/title";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/Common/Icon";
 import { DataTableContainer } from "./(container)/DataTableContainer";
-import { TableDataSearchParams } from "@/types/table";
 
 const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
   try {
@@ -25,12 +24,12 @@ const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
   }
 };
 
-export default async function SplashScreen(props: {
-  searchParams: TableDataSearchParams;
+export default async function SplashScreenPage(searchParams: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const search = (await props.searchParams) || {};
-  const searchKeyword = (search?.searchKeyword as string) || "name";
-  const searchTerm = (search?.searchTerm as string) || "";
+  const search = await searchParams.searchParams;
+  const searchKeyword = (search?.searchKeyword || "name") as string;
+  const searchTerm = (search?.searchTerm || "") as string;
   const data = await fetchTableData(searchKeyword, searchTerm);
 
   return (
@@ -41,7 +40,11 @@ export default async function SplashScreen(props: {
           신규등록 <Icon iconType="plus" size="sm" fill="white" />
         </Button>
       </div>
-      <DataTableContainer {...data} />
+      <DataTableContainer
+        data={data}
+        searchKeyword={searchKeyword}
+        searchTerm={searchTerm}
+      />
     </>
   );
 }
