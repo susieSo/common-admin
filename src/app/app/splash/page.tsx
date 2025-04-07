@@ -1,8 +1,6 @@
-import { Title } from "@/components/Layout/title";
-import { Button } from "@/components/ui/button";
-import { Icon } from "@/components/Common/Icon";
 import { DataTableContainer } from "./(container)/DataTableContainer";
 import { TableDataSearchParams } from "@/types/table";
+import { ContentTitle } from "@/components/Layout/content-title";
 
 const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
   try {
@@ -19,6 +17,7 @@ const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
     }
 
     const data = await response.json();
+
     return data.tableData;
   } catch (error) {
     throw error;
@@ -29,18 +28,13 @@ export default async function SplashScreenPage(props: {
   searchParams: TableDataSearchParams;
 }) {
   const search = await props.searchParams;
-  const searchKeyword = (search?.searchKeyword || "name") as string;
-  const searchTerm = (search?.searchTerm || "") as string;
+  const searchKeyword = (search.searchKeyword || "name") as string;
+  const searchTerm = (search.searchTerm || "") as string;
   const data = await fetchTableData(searchKeyword, searchTerm);
 
   return (
     <>
-      <div className="py-8 flex justify-between items-center">
-        <Title />
-        <Button size="lg" variant="gradient">
-          신규등록 <Icon iconType="plus" size="sm" fill="white" />
-        </Button>
-      </div>
+      <ContentTitle />
       <DataTableContainer
         data={data}
         searchKeyword={searchKeyword}
