@@ -9,7 +9,7 @@ const fetchTableData = async (searchKeyword: string, searchTerm: string) => {
     params.set("searchTerm", searchTerm || "");
 
     const response = await fetch(
-      `http://localhost:3000/api/tableData?${params.toString()}`
+      `${process.env.HOST_URL}/api/tableData?${params.toString()}`
     );
 
     if (!response.ok) {
